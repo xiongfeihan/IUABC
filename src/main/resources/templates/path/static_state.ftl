@@ -220,7 +220,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>坐标输入</h2>
+                            <h2>坐标输入<small>车间长度为${workshop.length}米，车间宽度为${workshop.width}米</small></h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -395,8 +395,8 @@
 
     // 下述3项应该从接口取
     var position = [];
-    var length = 30;
-    var width = 10;
+    var length = '${workshop.length}';
+    var width = '${workshop.width}';
 
     var app = {};
     option = null;
@@ -485,6 +485,8 @@
                 var y1 = parseFloat($("#start_Y").val());
                 var x2 = parseFloat($("#end_X").val());
                 var y2 = parseFloat($("#end_Y").val());
+
+                // 此处应该由路径规划策略得出坐标
                 position.push([x1, y1]);
                 position.push([x2, y2]);
                 option.series = [{
