@@ -445,7 +445,7 @@
         $("#start_X").change(function () {
             var start_x = parseFloat($(this).val());
             if (start_x > length || start_x < 0) {
-                alert("请输入正确的坐标");
+                alert("坐标超出车间长度范围！请重新输入");
                 $(this).val("");
                 this.focus();
             }
@@ -453,7 +453,7 @@
         $("#start_Y").change(function () {
             var start_y = parseFloat($(this).val());
             if (start_y > width || start_y < 0) {
-                alert("请输入正确的坐标");
+                alert("坐标超出车间宽度范围！请重新输入");
                 $(this).val("");
                 this.focus();
             }
@@ -461,7 +461,7 @@
         $("#end_X").change(function () {
             var end_x = parseFloat($(this).val());
             if (end_x > length || end_x < 0) {
-                alert("请输入正确的坐标");
+                alert("坐标超出车间长度范围！请重新输入");
                 $(this).val("");
                 this.focus();
             }
@@ -469,7 +469,7 @@
         $("#end_Y").change(function () {
             var end_y = parseFloat($(this).val());
             if (end_y > width || end_y < 0) {
-                alert("请输入正确的坐标");
+                alert("坐标超出车间宽度范围！请重新输入");
                 $(this).val("");
                 this.focus();
             }
@@ -479,14 +479,14 @@
                     || $("#start_Y").val().length === 0
                     || $("#end_X").val().length === 0
                     || $("#end_Y").val().length === 0) {
-                alert("请输入坐标");
+                alert("输入坐标不完整！");
             } else {
                 var x1 = parseFloat($("#start_X").val());
                 var y1 = parseFloat($("#start_Y").val());
                 var x2 = parseFloat($("#end_X").val());
                 var y2 = parseFloat($("#end_Y").val());
 
-                // 此处应该由路径规划策略得出坐标
+                // 此处应该由路径规划策略得出坐标,将车间信息以及输入其实坐标位置传给后台方法
                 position.push([x1, y1]);
                 position.push([x2, y2]);
                 option.series = [{
