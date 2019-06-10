@@ -220,7 +220,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>坐标输入<small>车间长度为${workshop.length}米，车间宽度为${workshop.width}米</small></h2>
+                            <h2>坐标输入<small>车间长度为 ${workshop.length} 米，车间宽度为 ${workshop.width} 米</small></h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
