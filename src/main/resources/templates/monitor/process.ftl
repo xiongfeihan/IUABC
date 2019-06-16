@@ -244,7 +244,7 @@
                             <div class="x_content">
                                 <div class="col-md-2">
                                     <div class="canvas-center">
-                                        <h4>大车速度:32m/min</h4>
+                                        <h4>大车速度:<span id="cart_speed"></span>m/min</h4>
                                         <canvas width="150" height="80" id="chart_gauge_01" class="" style="width: 160px; height: 100px;"></canvas>
                                         <div class="goal-wrapper">
                                             <span id="gauge-text1" class="gauge-value pull-left" style="padding-left: 15%">0</span>
@@ -565,6 +565,16 @@
 
 <!-- jQuery Knob -->
 <script src="/vendors/jquery-knob/dist/jquery.knob.min.js"></script>
+
+<script type = "text/javascript">
+    var speeds = ["10","20","30","40","50"];
+    var x = 0;
+    function clock() {
+        $("#cart_speed").html(speeds[x]);
+        x += 1;
+    };
+    self.setInterval(clock(),3000);
+</script>
 
 <!-- Custom Theme Scripts -->
 <script src="/js/custom.min.js"></script>
