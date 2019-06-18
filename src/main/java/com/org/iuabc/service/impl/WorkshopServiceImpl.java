@@ -18,6 +18,6 @@ public class WorkshopServiceImpl implements WorkshopService {
 
     @Override
     public Workshop findById(Long workshopId) {
-        return workshopDao.findById(workshopId).orElse(null);
+        return workshopDao.findByWorkshopId(workshopId);
     }
 }

@@ -8,6 +8,10 @@ import com.org.iuabc.entity.RunningData;
  */
 public interface RunningDataService {
 
+    // 查询实时运行数据
     RunningData findDataById(Long dataId);
+
+    // 创建运行数据
+    RunningData create(RunningData data);
 
 }

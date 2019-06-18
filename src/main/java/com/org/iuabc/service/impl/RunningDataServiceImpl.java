@@ -20,4 +20,9 @@ public class RunningDataServiceImpl implements RunningDataService {
     public RunningData findDataById(Long dataId) {
         return runningDataDao.findByDataId(dataId);
     }
+
+    @Override
+    public RunningData create(RunningData data) {
+        return runningDataDao.save(data);
+    }
 }
