@@ -243,15 +243,16 @@
                             </div>
                             <div class="x_content">
                                 <div class="col-md-2">
-                                    <div class="canvas-center">
-                                        <h4>大车速度:<span id="cart_speed"></span>m/min</h4>
-                                        <canvas width="150" height="80" id="chart_gauge_01" class="" style="width: 160px; height: 100px;"></canvas>
-                                        <div class="goal-wrapper">
-                                            <span id="gauge-text1" class="gauge-value pull-left" style="padding-left: 15%">0</span>
-                                            <span class="gauge-value pull-left">m/min</span>
-                                            <span id="goal-text1" class="goal-value pull-right" style="padding-right: 15%">60m/min</span>
-                                        </div>
-                                    </div>
+                                    <#--<div class="canvas-center">-->
+                                        <#--<h4>大车速度:<span id="cart_speed">${data.cartSpeed}</span>m/min</h4>-->
+                                        <#--<canvas width="150" height="80" id="chart_gauge_01" class="" style="width: 160px; height: 100px;"></canvas>-->
+                                        <#--<div class="goal-wrapper">-->
+                                            <#--<span id="gauge-text1" class="gauge-value pull-left" style="padding-left: 15%">0</span>-->
+                                            <#--<span class="gauge-value pull-left">m/min</span>-->
+                                            <#--<span id="goal-text1" class="goal-value pull-right" style="padding-right: 15%">60m/min</span>-->
+                                        <#--</div>-->
+                                    <#--</div>-->
+                                    <div id="container" style="width: 100%; height: 160%"></div>
                                 </div>
                                 <div class="col-md-2">
                                     <div class="canvas-center">
@@ -566,14 +567,112 @@
 <!-- jQuery Knob -->
 <script src="/vendors/jquery-knob/dist/jquery.knob.min.js"></script>
 
-<script type = "text/javascript">
-    var speeds = ["10","20","30","40","50"];
-    var x = 0;
-    function clock() {
-        $("#cart_speed").html(speeds[x]);
-        x += 1;
+<!-- echarts -->
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/echarts.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-gl/echarts-gl.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts-stat/ecStat.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/dataTool.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/china.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/map/js/world.js"></script>
+<script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=6GozrD2hGuUG5n35Ut3ksqBTZ5SNdx6l"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
+<script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+
+
+<script type="text/javascript">
+    var dom = document.getElementById("container");
+    var myChart = echarts.init(dom);
+    var app = {};
+    option = null;
+    option = {
+        tooltip : {
+            formatter: "{a} <br/>{b} : {c}m/min"
+        },
+        toolbox: {
+
+        },
+        series: [
+            {
+                name: '基本信息',
+                type: 'gauge',
+                radius: "100%",
+                center: ["50%", "55%"],
+                min: 0,                 // 最小的数据值,默认 0 。映射到 minAngle。
+                max: 60,
+                detail: {
+                    show: true,             // 是否显示详情,默认 true。
+                    offsetCenter: ["-3%","80%"],// 相对于仪表盘中心的偏移位置，数组第一项是水平方向的偏移，第二项是垂直方向的偏移。可以是绝对的数值，也可以是相对于仪表盘半径的百分比。
+                    color: "auto",          // 文字的颜色,默认 auto。
+                    fontSize: 15,           // 文字的字体大小,默认 15。
+                    formatter: "{value}m/min",
+                },
+                data: [{value: 50, name: '大车速度'}],
+
+                axisLine: {             // 仪表盘轴线(轮廓线)相关配置。
+                    show: true,             // 是否显示仪表盘轴线(轮廓线),默认 true。
+                    lineStyle: {            // 仪表盘轴线样式。
+                        // color: "#fff",  //仪表盘的轴线可以被分成不同颜色的多段。每段的  结束位置(范围是[0,1]) 和  颜色  可以通过一个数组来表示。默认取值：[[0.2, '#91c7ae'], [0.8, '#63869e'], [1, '#c23531']]
+                        opacity: 1,                 //图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+                        width: 10,                  //轴线宽度,默认 30。
+                        shadowBlur: 20,             //(发光效果)图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。
+                        shadowColor: "#fff",        //阴影颜色。支持的格式同color。
+                    }
+                },
+
+                splitLine: {            // 分隔线样式。
+                    show: true,             // 是否显示分隔线,默认 true。
+                    length: 10,             // 分隔线线长。支持相对半径的百分比,默认 30。
+                    lineStyle: {            // 分隔线样式。
+                        color: "#eee",              //线的颜色,默认 #eee。
+                        opacity: 1,                 //图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+                        width: 2,                   //线度,默认 2。
+                        type: "solid",              //线的类型,默认 solid。 此外还有 dashed,dotted
+                        shadowBlur: 10,             //(发光效果)图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。
+                        shadowColor: "#fff",        //阴影颜色。支持的格式同color。
+                    }
+                },
+
+                pointer: {              // 仪表盘指针。
+                    show: true,             // 是否显示指针,默认 true。
+                    length: "80%",          // 指针长度，可以是绝对数值，也可以是相对于半径的百分比,默认 80%。
+                    width: 6,               // 指针宽度,默认 8。
+                },
+
+                title: {                // 仪表盘标题。
+                    show: true,             // 是否显示标题,默认 true。
+                    offsetCenter: [0,"-35%"],//相对于仪表盘中心的偏移位置，数组第一项是水平方向的偏移，第二项是垂直方向的偏移。可以是绝对的数值，也可以是相对于仪表盘半径的百分比。
+                    color: "#73879C",          // 文字的颜色,默认 #333。
+                    fontSize: 15,           // 文字的字体大小,默认 15。
+                },
+            }
+        ]
     };
-    self.setInterval(clock(),3000);
+
+    setInterval(function () {
+        $.ajax({
+            type : "get",
+            url : "/realTime/monitor/getLatestData",
+            dataType : "json",
+            data : {
+
+            },
+            success : function (d) {
+                if (d.code == "success") {
+                    option.series[0].data[0].value = d.data.cartSpeed.toFixed(2);
+                    myChart.setOption(option, true);
+                }
+            },
+            error : function () {
+                alert("失败");
+            }
+        })
+        // option.series[0].data[0].value = (Math.random() * 60).toFixed(2) - 0;
+        // myChart.setOption(option, true);
+    },1000);
+    ;
+    if (option && typeof option === "object") {
+        myChart.setOption(option, true);
+    }
 </script>
 
 <!-- Custom Theme Scripts -->

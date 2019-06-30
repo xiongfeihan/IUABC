@@ -25,4 +25,9 @@ public class RunningDataServiceImpl implements RunningDataService {
     public RunningData create(RunningData data) {
         return runningDataDao.save(data);
     }
+
+    @Override
+    public RunningData findLatestData() {
+        return runningDataDao.findLatestData();
+    }
 }

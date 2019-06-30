@@ -2,6 +2,7 @@ package com.org.iuabc.dao;
 
 import com.org.iuabc.entity.RunningData;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 /**
  * Author: Xiongfei Han
@@ -10,5 +11,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface RunningDataDao extends JpaRepository<RunningData, Long> {
 
     RunningData findByDataId(Long dataId);
+
+    @Query(value = "select * from running_data order by create_time desc limit 1", nativeQuery = true)
+    RunningData findLatestData();
 
 }

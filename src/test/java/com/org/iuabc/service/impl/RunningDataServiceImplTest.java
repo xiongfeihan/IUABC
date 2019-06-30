@@ -33,19 +33,42 @@ public class RunningDataServiceImplTest {
 
     @Test
     public void create() {
-        RunningData data = new RunningData();
-        data.setCartSpeed(2.34F);
-        data.setCartLevel(2);
-        data.setCartPosition(40F);
-        data.setCrabSpeed(1.23F);
-        data.setCrabPosition(20F);
-        data.setCrabLevel(1);
-        data.setHoistSpeed(3.32F);
-        data.setHoistPosition(4.67F);
-        data.setHoistLevel(3);
-        data.setCraneId(1L);
-        RunningData result = runningDataService.create(data);
-        log.info("[创建运行数据] result = {}", result);
-        Assert.assertNotNull(result);
+//        RunningData data = new RunningData();
+//        data.setCartSpeed(2.34F);
+//        data.setCartLevel(2);
+//        data.setCartPosition(40F);
+//        data.setCrabSpeed(1.23F);
+//        data.setCrabPosition(20F);
+//        data.setCrabLevel(1);
+//        data.setHoistSpeed(3.32F);
+//        data.setHoistPosition(4.67F);
+//        data.setHoistLevel(3);
+//        data.setCraneId(1L);
+//        RunningData result = runningDataService.create(data);
+
+        int count = 0;
+        for (int i = 0; i < 100; i++) {
+            RunningData data = new RunningData();
+            data.setCartSpeed((float) (Math.random()*10));
+            data.setCartLevel(2);
+            data.setCartPosition((float) (Math.random()*50));
+            data.setCrabSpeed((float) (Math.random()*10));
+            data.setCrabPosition((float) (Math.random()*50));
+            data.setCrabLevel(1);
+            data.setHoistSpeed((float) (Math.random()*10));
+            data.setHoistPosition((float) (Math.random()*50));
+            data.setHoistLevel(3);
+            data.setCraneId(1L);
+            RunningData result = runningDataService.create(data);
+            count++;
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        log.info("[创建运行数据] count = {} 条", count);
+        Assert.assertEquals(100, count);
     }
 }

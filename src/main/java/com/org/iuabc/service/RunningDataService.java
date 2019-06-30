@@ -14,4 +14,7 @@ public interface RunningDataService {
     // 创建运行数据
     RunningData create(RunningData data);
 
+    // 查询最新运行数据
+    RunningData findLatestData();
+
 }
