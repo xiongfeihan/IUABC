@@ -215,7 +215,7 @@
 
         <!-- page content -->
         <div class="right_col" role="main">
-            <b>主体页面还未开发，敬请期待！sjkfdjaksdjkfajs</b>
+            <b>主体页面还未开发，敬请期待！</b>
         </div>
 
         <!-- footer content -->
