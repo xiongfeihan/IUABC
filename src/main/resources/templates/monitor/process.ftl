@@ -606,7 +606,7 @@
                     fontSize: 15,           // 文字的字体大小,默认 15。
                     formatter: "{value}m/min",
                 },
-                data: [{value: 50, name: '大车速度'}],
+                data: [{value: 0, name: '大车速度'}],
 
                 axisLine: {             // 仪表盘轴线(轮廓线)相关配置。
                     show: true,             // 是否显示仪表盘轴线(轮廓线),默认 true。
@@ -648,26 +648,33 @@
         ]
     };
 
-    setInterval(function () {
-        $.ajax({
-            type : "get",
-            url : "/realTime/monitor/getLatestData",
-            dataType : "json",
-            data : {
+    var flag = "${status}";
 
-            },
-            success : function (d) {
-                if (d.code == "success") {
-                    option.series[0].data[0].value = d.data.cartSpeed.toFixed(2);
-                    myChart.setOption(option, true);
+    setInterval(function () {
+        if (flag == "running") {
+            $.ajax({
+                type : "get",
+                url : "/realTime/monitor/getLatestData",
+                dataType : "json",
+                data : {
+
+                },
+                success : function (d) {
+                    if (d.code == "success") {
+                        option.series[0].data[0].value = d.data.cartSpeed.toFixed(2);
+                        myChart.setOption(option, true);
+                    }
+                },
+                error : function () {
+                    alert("失败");
                 }
-            },
-            error : function () {
-                alert("失败");
-            }
-        })
-        // option.series[0].data[0].value = (Math.random() * 60).toFixed(2) - 0;
-        // myChart.setOption(option, true);
+            })
+        } else {
+            // option.series[0].data[0].value = (Math.random() * 60).toFixed(2) - 0;
+            option.series[0].data[0].value = 0;
+            myChart.setOption(option, true);
+        }
+
     },1000);
     ;
     if (option && typeof option === "object") {

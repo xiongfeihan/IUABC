@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -28,7 +29,12 @@ public class RealTimeMonitorController {
     @RequestMapping("/process")
     public ModelAndView process() {
         Map<String, Object> map = new HashMap<>();
-        RunningData data = dataService.findDataById(1L);
+        RunningData data = dataService.findLatestData();
+        if (Math.abs(data.getCreateTime().getTime() - new Date().getTime()) < 1000 * 60) {
+            map.put("status", "running");
+        } else {
+            map.put("status", "static");
+        }
         map.put("data", data);
         return new ModelAndView("monitor/process", map);
     }
