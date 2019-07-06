@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Date;
@@ -23,8 +22,12 @@ import java.util.Map;
 @RequestMapping("/realTime/monitor")
 public class RealTimeMonitorController {
 
-    @Autowired
     private RunningDataService dataService;
+
+    @Autowired
+    public void setDataService(RunningDataService dataService) {
+        this.dataService = dataService;
+    }
 
     @RequestMapping("/process")
     public ModelAndView process() {

@@ -215,7 +215,73 @@
 
         <!-- page content -->
         <div class="right_col" role="main">
-            <b>主体页面还未开发，敬请期待！</b>
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>起重机信息</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Settings 1</a>
+                                </li>
+                                <li><a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <div class="table-responsive">
+                        <table class="table table-striped jambo_table bulk_action">
+                            <thead>
+                            <tr class="headings">
+                                <th><input type="checkbox" id="check-all" class="flat"></th>
+                                <th class="column-title">起重机ID</th>
+                                <th class="column-title">起重机名称</th>
+                                <th class="column-title">工作级别</th>
+                                <th class="column-title">生产商</th>
+                                <th class="column-title">启用日期</th>
+                                <th class="column-title">额定起重量(吨)</th>
+                                <th class="column-title">标准跨度(米)</th>
+                                <th class="column-title">起升高度(米)</th>
+                                <th class="column-title">所在车间(No.)</th>
+                                <th class="column-title no-link last"><span class="nobr">操作</span></th>
+                                <th class="bulk-actions" colspan="10">
+                                    <a class="antoo" style="color:#fff; font-weight:500;">批量操作( <span class="action-cnt"> </span> ) <i class="fa fa-chevron-down"></i></a>
+                                </th>
+                            </tr>
+                            </thead>
+
+                            <tbody>
+                            <#list craneList as crane>
+                                <tr class="even pointer">
+                                    <td class="a-center ">
+                                        <input type="checkbox" class="flat" name="table_records">
+                                    </td>
+                                    <td>${crane.crane_id}</td>
+                                    <td>${crane.crane_name}</td>
+                                    <td>${crane.crane_workingLevel}</td>
+                                    <td>${crane.crane_manufacturer}</td>
+                                    <td>${crane.crane_startUsingDate}</td>
+                                    <td>${crane.crane_ratedLiftingCapacity}</td>
+                                    <td>${crane.crane_standardSpan}</td>
+                                    <td>${crane.crane_liftingHeight}</td>
+                                    <td>${crane.crane_installation}</td>
+                                    <td class=" edit"><a href="#">修改</a></td>
+                                </tr>
+                            </#list>
+                            </tbody>
+                        </table>
+                    </div>
+
+
+                </div>
+            </div>
         </div>
 
         <!-- footer content -->

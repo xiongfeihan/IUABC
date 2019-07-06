@@ -19,8 +19,12 @@ import java.util.Map;
 @RequestMapping("/path/planning")
 public class PathPlanningController {
 
-    @Autowired
     private WorkshopService workshopService;
+
+    @Autowired
+    public void setWorkshopService(WorkshopService workshopService) {
+        this.workshopService = workshopService;
+    }
 
     @RequestMapping("/dynamicState")
     public ModelAndView dynamicState() {

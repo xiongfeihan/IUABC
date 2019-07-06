@@ -13,8 +13,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class WorkshopServiceImpl implements WorkshopService {
 
-    @Autowired
     private WorkshopDao workshopDao;
+
+    @Autowired
+    public void setWorkshopDao(WorkshopDao workshopDao) {
+        this.workshopDao = workshopDao;
+    }
 
     @Override
     public Workshop findById(Long workshopId) {

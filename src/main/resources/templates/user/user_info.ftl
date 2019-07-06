@@ -541,7 +541,7 @@
         $(".delete", this).on("click", function () {
             /*获取删除标签所在行的第一列值*/
             var userId = $(this).parents("tr").find("td").eq(0).text();
-            var confirmDelete = confirm("是否确定删除此用户？");
+            var confirmDelete = confirm("是否确定删除用户："+$(this).parents("tr").find("td").eq(1).text()+"？");
             if (confirmDelete === true) {
                 $.ajax({
                     type : "delete",

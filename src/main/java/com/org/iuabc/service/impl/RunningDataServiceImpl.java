@@ -13,8 +13,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class RunningDataServiceImpl implements RunningDataService {
 
-    @Autowired
     private RunningDataDao runningDataDao;
+
+    @Autowired
+    public void setRunningDataDao(RunningDataDao runningDataDao) {
+        this.runningDataDao = runningDataDao;
+    }
 
     @Override
     public RunningData findDataById(Long dataId) {

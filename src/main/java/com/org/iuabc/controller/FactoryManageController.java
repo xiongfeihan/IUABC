@@ -19,8 +19,12 @@ import java.util.Map;
 @RequestMapping("/factory/manage")
 public class FactoryManageController {
 
-    @Autowired
     private WorkshopService workshopService;
+
+    @Autowired
+    public void setWorkshopService(WorkshopService workshopService) {
+        this.workshopService = workshopService;
+    }
 
     @RequestMapping("/basicInfo")
     public ModelAndView basicInfo(Map<String, Object> map) {
