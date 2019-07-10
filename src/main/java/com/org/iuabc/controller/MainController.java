@@ -12,6 +12,12 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class MainController {
 
+    @RequestMapping("/")
+    public ModelAndView login(){
+
+        return new ModelAndView("login");
+    }
+
     @RequestMapping("/index")
     public ModelAndView index() {
         return new ModelAndView("index");
