@@ -856,7 +856,7 @@ a {
 }
 
 .navbar-brand, .navbar-nav > li > a, .site_title {
-    color: #ECF0F1 !important;
+    color: #ECF0F1;
     margin-left: 0 !important
 }
 

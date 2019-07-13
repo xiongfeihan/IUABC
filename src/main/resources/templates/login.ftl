@@ -10,31 +10,43 @@
 
     <title>IUABC</title>
 
+    <!-- Bootstrap -->
+    <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <!-- NProgress -->
+    <link href="/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <!-- iCheck -->
+    <link href="/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
 
+    <!-- bootstrap-progressbar -->
+    <link href="/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
+    <!-- JQVMap -->
+    <link href="/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
+    <!-- bootstrap-daterangepicker -->
+    <link href="/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
+
+    <!-- Custom Theme Style -->
+    <link href="/css/custom.min.css" rel="stylesheet">
     <style type="text/css">
         .code {
             background-color: gold;
             font-family: "Times New Roman", serif; /*设置字体*/
-            font-style: initial;
             color: brown;
-            font-size: 24px;
+            font-size: 20px;
             line-height: 34px;
             letter-spacing: 3px;
             font-weight: bolder;
 
+            width: 80px;
+            height: 34px;
             text-align: center;
-            padding-bottom: 4px;
-            padding-top: 4px;
+            display: inline-block;
         }
 
         .yz {
-            text-decoration: none;
             font-size: 12px;
             color: #e4b9c0;
-            line-height: 3;
-            /*position: absolute;*/
-            /*margin-left: 220px;*/
-            /*margin-top: -10px;*/
         }
 
         .yz:hover {
@@ -91,11 +103,8 @@
 </div>
 <nav class="navbar navbar-default navbar-fixed-top">
     <div class="container-fluid">
-        <div class="navbar-header">
-            <button type="button" class="navbar-toggle" data-toggle="collapse"
-                    data-target="#bs-example-navbar-collapse-1"><span class="sr-only">Toggle navigation</span><span
-                        class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
-            <a class="navbar-brand" href="#">IUABC</a>
+        <div class="navbar-header" style="margin-top: 2px">
+            <a class="navbar-brand" href="#" style="height: 100%;letter-spacing: 3px;color: white">IUABC</a>
         </div>
         <div class="collapse navbar-collapse" id="myNavbar">
             <ul class="nav navbar-nav navbar-right">
@@ -189,15 +198,11 @@
                 </div>
                 <div class="form-group">
                     <label>验证码</label><br>
-                    <input type="text" id="YZ" maxlength="4" style="width: 69%; height: 34px; float: left"
+                    <input type="text" class="form-control" id="YZ" maxlength="4" style="width: 65%;display: inline"
                            placeholder="请输入验证码(不区分大小写)"/>
                     <div style="float: right">
-                        <div style="float: left">
-                            <span class="code" id="checkCode" onclick="createCode()" style="width: 100px;"></span>
-                        </div>
-                        <div style="float: right">
-                            <a class="yz" href="#" onclick="createCode()">看不清换一张</a>
-                        </div>
+                        <div class="code" id="checkCode" onclick="createCode()"></div>
+                        <a class="yz" href="#" onclick="createCode()">看不清换一张</a>
                     </div>
                 </div>
                 <div class="checkbox">
@@ -210,31 +215,10 @@
         <div class="col-md-1 column">
         </div>
     </div>
-    <div class="navbar-fixed-bottom " style="background-color: white">
+    <div class="navbar-default navbar-fixed-bottom ">
         <p style="text-align: center;margin-top: 10px">©2019 Tongji University, All Rights Reserved.</p>
     </div>
 </div>
-
-<!-- Bootstrap -->
-<link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-<!-- Font Awesome -->
-<link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-<!-- NProgress -->
-<link href="/vendors/nprogress/nprogress.css" rel="stylesheet">
-<!-- iCheck -->
-<link href="/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-
-<!-- bootstrap-progressbar -->
-<link href="/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
-<!-- JQVMap -->
-<link href="/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
-<!-- bootstrap-daterangepicker -->
-<link href="/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-
-<!-- Custom Theme Style -->
-<link href="/css/custom.min.css" rel="stylesheet">
-
-
 
 <!-- jQuery -->
 <script src="/vendors/jquery/dist/jquery.min.js"></script>
