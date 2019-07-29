@@ -185,24 +185,24 @@
             </div>
         </div>
         <div class="col-md-3 column" style="margin-top: 100px">
-            <form role="form">
+            <form role="form" action="#">
                 <div class="form-group">
                     <label for="exampleInputEmail1">账号</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="请输入邮箱" required
+                    <input type="text" class="form-control" id="username" placeholder="请输入账号" required
                            autofocus/>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">密码</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="请输入密码" required
+                    <input type="password" class="form-control" id="password" placeholder="请输入密码" required
                            autofocus/>
                 </div>
                 <div class="form-group">
                     <label>验证码</label><br>
                     <input type="text" class="form-control" id="YZ" maxlength="4" style="width: 65%;display: inline"
-                           placeholder="请输入验证码(不区分大小写)"/>
+                           placeholder="请输入验证码(不区分大小写)" required/>
                     <div style="float: right">
                         <div class="code" id="checkCode" onclick="createCode()"></div>
-                        <a class="yz" href="#" onclick="createCode()">看不清换一张</a>
+                        <a class="yz" onclick="createCode()">看不清换一张</a>
                     </div>
                 </div>
                 <div class="checkbox">
@@ -260,39 +260,6 @@
 
 <!-- Custom Theme Scripts -->
 <script src="/js/custom.min.js"></script>
-<script type="text/javascript">
-
-    var code;
-
-    function createCode() {  //函数体
-        code = "";
-        var codeLength = 4; //验证码的长度
-        var checkCode = document.getElementById("checkCode");
-        var codeChars = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9,
-            'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z',
-            'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z']; //所有候选组成验证码的字符，当然也可以用中文的
-        for (var i = 0; i < codeLength; i++) {
-            var charNum = Math.floor(Math.random() * 52);//设置随机产生
-            code += codeChars[charNum];
-        }
-        if (checkCode) {
-            checkCode.className = "code";
-            checkCode.innerHTML = code;
-        }
-    }
-
-    function getDom() {
-        if ($("#YZ").val() === "") {
-            alert("验证码不能为空！");
-            createCode();//输错一次或提交一次都将会刷新一次验证码
-            return false; //结束本次会话
-        } else if ($("#YZ").value.toUpperCase() !== code.toUpperCase()) { //toUpperCase不区分大小写
-            alert("您输入的验证码有误，请重新输入！！");
-            createCode();//读取文件
-        } else {
-            alert("ok");
-        }
-    }
-</script>
+<script type="text/javascript" src="/js/login.js"></script>
 </body>
 </html>
