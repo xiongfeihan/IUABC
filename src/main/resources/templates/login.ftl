@@ -12,6 +12,8 @@
 
     <!-- Bootstrap -->
     <link href="/vendors/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- BootstrapValidator -->
+    <link href="/vendors/bootstrap-validator/bootstrapValidator.min.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
     <!-- NProgress -->
@@ -185,7 +187,7 @@
             </div>
         </div>
         <div class="col-md-3 column" style="margin-top: 100px">
-            <form role="form" method="post" action="/login">
+            <form id="loginForm" role="form" method="post" action="/login">
                 <div class="form-group">
                     <label for="exampleInputEmail1">账号</label>
                     <input type="text" class="form-control" id="username" name="username" placeholder="请输入账号" required
@@ -198,8 +200,8 @@
                 </div>
                 <div class="form-group">
                     <label>验证码</label><br>
-                    <input type="text" class="form-control" id="YZ" maxlength="4" style="width: 65%;display: inline"
-                           placeholder="请输入验证码(不区分大小写)" required/>
+                    <input type="text" class="form-control" id="verification" maxlength="4" style="width: 65%;display: inline"
+                           placeholder="请输入验证码(不区分大小写)" required autofocus/>
                     <div style="float: right">
                         <div class="code" id="checkCode" onclick="createCode()"></div>
                         <a class="yz" onclick="createCode()">看不清换一张</a>
@@ -208,7 +210,7 @@
                 <div class="checkbox">
                     <label><input type="checkbox"/>记住我</label>
                 </div>
-                <button type="submit" class="btn btn-lg btn-primary btn-block" onclick="login()">登&nbsp;&nbsp;录
+                <button id="submit" type="submit" class="btn btn-lg btn-primary btn-block">登&nbsp;&nbsp;录
                 </button>
             </form>
             <#if Session["failMsg"]??>
@@ -265,6 +267,9 @@
 <!-- bootstrap-daterangepicker -->
 <script src="/vendors/moment/min/moment.min.js"></script>
 <script src="/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
+
+<!-- bootstrapValidator -->
+<script src="/vendors/bootstrap-validator/bootstrapValidator.min.js"></script>
 
 <!-- Custom Theme Scripts -->
 <script src="/js/custom.min.js"></script>
