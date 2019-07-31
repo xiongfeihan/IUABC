@@ -21,6 +21,8 @@ public class MainController {
     @Autowired
     private UserService userService;
 
+    boolean isReload;
+
     @RequestMapping("/")
     public String root(HttpSession httpSession){
         if (isReload)
@@ -28,8 +30,6 @@ public class MainController {
         isReload = true;
         return "login";
     }
-
-    boolean isReload;
 
     @RequestMapping("/login")
     public String login(String username, String password, HttpSession httpSession){
