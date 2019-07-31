@@ -211,7 +211,8 @@
                 <button type="submit" class="btn btn-lg btn-primary btn-block" onclick="login()">登&nbsp;&nbsp;录
                 </button>
             </form>
-            <#if Session["failMsg"]?exists>
+            <#if Session["failMsg"]??>
+                <#--如果failMsg不为空-->
                 <p id="failMsg">
                     <span style="color: #f83532;font-weight: bold;font-size: 16px">
                         ${Session.failMsg}

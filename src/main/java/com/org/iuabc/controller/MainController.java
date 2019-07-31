@@ -5,7 +5,6 @@ import com.org.iuabc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -18,10 +17,14 @@ import javax.servlet.http.HttpSession;
 @Controller
 public class MainController {
 
-    @Autowired
     private UserService userService;
 
-    boolean isReload;
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
+
+    private boolean isReload;
 
     @RequestMapping("/")
     public String root(HttpSession httpSession){
