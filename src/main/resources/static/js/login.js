@@ -17,18 +17,19 @@ function createCode() {  //函数体
     }
 }
 
-function getDom() {
+function login() {
     if ($("#username").val() !== "" && $("#password").val() !== "") {
-        if ($("#YZ").val() === "") {
-            alert("验证码不能为空！");
-            createCode();//输错一次或提交一次都将会刷新一次验证码
-            return false; //结束本次会话
-        } else if ($("#YZ").val().toUpperCase() !== code.toUpperCase()) { //toUpperCase不区分大小写
+        // if ($("#YZ").val() === "") {
+        //     alert("验证码不能为空！");
+        //     createCode();//输错一次或提交一次都将会刷新一次验证码
+        //     return false; //结束本次会话
+        // }
+        if ($("#YZ").val().toUpperCase() !== code.toUpperCase()) { //toUpperCase不区分大小写
             alert("您输入的验证码有误，请重新输入！！");
             createCode();//读取文件
             return false;
         } else {
-            alert("ok");
+
         }
     }
 }

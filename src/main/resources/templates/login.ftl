@@ -185,15 +185,15 @@
             </div>
         </div>
         <div class="col-md-3 column" style="margin-top: 100px">
-            <form role="form" action="#">
+            <form role="form" method="post" action="/login">
                 <div class="form-group">
                     <label for="exampleInputEmail1">账号</label>
-                    <input type="text" class="form-control" id="username" placeholder="请输入账号" required
+                    <input type="text" class="form-control" id="username" name="username" placeholder="请输入账号" required
                            autofocus/>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">密码</label>
-                    <input type="password" class="form-control" id="password" placeholder="请输入密码" required
+                    <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码" required
                            autofocus/>
                 </div>
                 <div class="form-group">
@@ -208,9 +208,16 @@
                 <div class="checkbox">
                     <label><input type="checkbox"/>记住我</label>
                 </div>
-                <button type="submit" class="btn btn-lg btn-primary btn-block" onclick="getDom()">登&nbsp;&nbsp;录
+                <button type="submit" class="btn btn-lg btn-primary btn-block" onclick="login()">登&nbsp;&nbsp;录
                 </button>
             </form>
+            <#if Session["failMsg"]?exists>
+                <p id="failMsg">
+                    <span style="color: #f83532;font-weight: bold;font-size: 16px">
+                        ${Session.failMsg}
+                    </span>
+                </p>
+            </#if>
         </div>
         <div class="col-md-1 column">
         </div>

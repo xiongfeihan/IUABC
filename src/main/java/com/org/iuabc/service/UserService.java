@@ -19,4 +19,7 @@ public interface UserService {
 
     // 删除用户
     Integer delete(String userId);
+
+    // 验证用户名密码
+    User authorizeUser(String username, String password);
 }
