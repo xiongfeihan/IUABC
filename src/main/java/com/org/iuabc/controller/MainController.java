@@ -27,7 +27,7 @@ public class MainController {
     private boolean isReload;
 
     @RequestMapping("/")
-    public String root(HttpSession httpSession){
+    public String root(HttpSession httpSession) {
         if (isReload)
             httpSession.removeAttribute("failMsg");
         isReload = true;
@@ -35,24 +35,24 @@ public class MainController {
     }
 
     @RequestMapping("/login")
-    public String login(String username, String password, HttpSession httpSession){
-        if (username == null || password == null|| password.equals("") || username.equals("")) {
-            httpSession.setAttribute("failMsg","请输入用户名和密码！");
+    public String login(String username, String password, HttpSession httpSession) {
+        if (username == null || password == null || password.equals("") || username.equals("")) {
+            httpSession.setAttribute("failMsg", "请输入用户名和密码！");
             isReload = false;
             return "redirect:/";
         } else {
             try {
                 User user = userService.authorizeUser(username, password);
                 if (user != null) {
-                    httpSession.setAttribute("user",user);
+                    httpSession.setAttribute("user", user);
                     return "redirect:/index/";
                 } else {
-                    httpSession.setAttribute("failMsg","用户名或密码不正确！");
+                    httpSession.setAttribute("failMsg", "用户名或密码不正确！");
                     isReload = false;
                     return "redirect:/";
                 }
             } catch (Exception e) {
-                httpSession.setAttribute("failMsg","请输入用户名和密码！");
+                httpSession.setAttribute("failMsg", "请输入用户名和密码！");
                 isReload = false;
                 return "redirect:/";
             }
