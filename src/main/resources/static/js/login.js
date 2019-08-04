@@ -23,6 +23,8 @@ submit.onclick = function (ev) {
     if ($("#username").val() !== "" && $("#password").val() !== "" && $("#verification").val() !== "") {
         if ($("#verification").val().toUpperCase() !== code.toUpperCase()) { //toUpperCase不区分大小写
             alert("您输入的验证码有误，请重新输入！！");
+            $("#verification").val("");
+            $("#verification").focus();
             createCode();//读取文件
             return false;
         } else {

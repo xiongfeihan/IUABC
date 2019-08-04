@@ -28,17 +28,25 @@ public class RunningData {
 
     private Integer cartLevel;
 
+    private Integer cartDirection;
+
     private Float crabSpeed;
 
     private Float crabPosition;
 
     private Integer crabLevel;
 
+    private Integer crabDirection;
+
     private Float hoistSpeed;
 
     private Float hoistPosition;
 
     private Integer hoistLevel;
+
+    private Integer hoistDirection;
+
+    private Float workload;
 
     private Long craneId;
 

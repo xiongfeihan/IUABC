@@ -10,4 +10,6 @@ public interface WorkshopService {
 
     Workshop findById(Long workshopId);
 
+    Workshop create(Workshop workshop);
+
 }

@@ -24,4 +24,9 @@ public class WorkshopServiceImpl implements WorkshopService {
     public Workshop findById(Long workshopId) {
         return workshopDao.findByWorkshopId(workshopId);
     }
+
+    @Override
+    public Workshop create(Workshop workshop) {
+        return workshopDao.save(workshop);
+    }
 }

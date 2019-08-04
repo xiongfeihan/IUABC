@@ -3,6 +3,8 @@ package com.org.iuabc.entity;
 import lombok.Data;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 /**
@@ -15,6 +17,7 @@ import javax.persistence.Id;
 public class Workshop {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long workshopId;
 
     private Float length;
