@@ -40,15 +40,21 @@
             letter-spacing: 3px;
             font-weight: bolder;
 
-            width: 80px;
+            width: 52%;
             height: 34px;
             text-align: center;
             display: inline-block;
+
+            cursor: pointer;
         }
 
         .yz {
+            float: right;
+            line-height: 34px;
             font-size: 12px;
             color: #e4b9c0;
+
+            cursor: pointer;
         }
 
         .yz:hover {
@@ -200,9 +206,9 @@
                 </div>
                 <div class="form-group">
                     <label>验证码</label><br>
-                    <input type="text" class="form-control" id="verification" maxlength="4" style="width: 65%;display: inline"
+                    <input type="text" class="form-control" id="verification" maxlength="4" style="width:65%;display: inline"
                            placeholder="请输入验证码(不区分大小写)" required autofocus/>
-                    <div style="float: right">
+                    <div style="float: right;width: 34%;">
                         <div class="code" id="checkCode" onclick="createCode()"></div>
                         <a class="yz" onclick="createCode()">看不清换一张</a>
                     </div>
@@ -213,7 +219,15 @@
                 <button id="submit" type="submit" class="btn btn-lg btn-primary btn-block">登&nbsp;&nbsp;录
                 </button>
             </form>
-            <#if Session["failMsg"]?exists>
+            <#if Session["msg"]??>
+                <p id="msg">
+                    <span style="color: #f83532;font-weight: bold;font-size: 16px">
+                        ${Session.msg}
+                    </span>
+                </p>
+            </#if>
+            <#if Session["failMsg"]??>
+                <#--如果failMsg不为空-->
                 <p id="failMsg">
                     <span style="color: #f83532;font-weight: bold;font-size: 16px">
                         ${Session.failMsg}
