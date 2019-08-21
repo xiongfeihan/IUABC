@@ -17,4 +17,6 @@ public interface RunningDataService {
     // 查询最新运行数据
     RunningData findLatestData();
 
+    Integer send(String position);
+
 }

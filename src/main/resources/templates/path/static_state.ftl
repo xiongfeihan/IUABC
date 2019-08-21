@@ -266,7 +266,7 @@
                                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-5">
                                         <button type="button" class="btn btn-primary" id="generate_path">生成路径</button>
                                         <button class="btn btn-primary" type="reset" id="reset">重置</button>
-                                        <button type="submit" class="btn btn-success">运行</button>
+                                        <button type="button" class="btn btn-success" id="run">运行</button>
                                     </div>
                                 </div>
 
@@ -389,6 +389,7 @@
 <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=6GozrD2hGuUG5n35Ut3ksqBTZ5SNdx6l"></script>
 <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/echarts/extension/bmap.min.js"></script>
 <script type="text/javascript" src="http://echarts.baidu.com/gallery/vendors/simplex.js"></script>
+<script type="text/javascript" src="/js/path.js"></script>
 <script type="text/javascript">
     var dom = document.getElementById("container");
     var myChart = echarts.init(dom);
@@ -503,7 +504,7 @@
             option.series = [];
             myChart.clear();
             myChart.setOption(option, true);
-        })
+        });
     })
 
     // 检查输入坐标是否合理

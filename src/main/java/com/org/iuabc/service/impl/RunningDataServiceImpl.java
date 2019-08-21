@@ -1,8 +1,11 @@
 package com.org.iuabc.service.impl;
 
+import com.alibaba.fastjson.JSONObject;
 import com.org.iuabc.dao.RunningDataDao;
 import com.org.iuabc.entity.RunningData;
 import com.org.iuabc.service.RunningDataService;
+import com.org.iuabc.socket.ClientSocket;
+import com.org.iuabc.socket.IuabcServerSocket;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,5 +36,28 @@ public class RunningDataServiceImpl implements RunningDataService {
     @Override
     public RunningData findLatestData() {
         return runningDataDao.findLatestData();
+    }
+
+    @Override
+    public Integer send(String position) {
+        StringBuilder builder = new StringBuilder();
+        builder.append("{\"status\":2,\"data\":");
+        builder.append(position);
+        builder.append("}");
+
+        if (IuabcServerSocket.clientsMap.size() == 0) {
+            return 2;
+        }
+        if (IuabcServerSocket.clientsMap.size() > 0) {
+            ClientSocket clientSocket = IuabcServerSocket.clientsMap.get("192.168.1.129");
+            clientSocket.send(builder.toString());
+            return 1;
+        }
+
+        JSONObject jsonObject = JSONObject.parseObject(position);
+        JSONObject start = jsonObject.getJSONObject("start");
+        JSONObject end = jsonObject.getJSONObject("end");
+
+        return 0;
     }
 }

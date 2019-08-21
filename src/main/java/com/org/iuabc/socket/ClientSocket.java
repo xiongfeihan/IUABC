@@ -1,5 +1,6 @@
 package com.org.iuabc.socket;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.org.iuabc.entity.RunningData;
 import com.org.iuabc.service.RunningDataService;
@@ -190,6 +191,10 @@ public class ClientSocket implements Runnable{
                 byte[] bytes = new byte[1024];
                 inputStream.read(bytes);
                 String info = new String(bytes, "utf-8").trim();
+
+                // 处理json格式的字符串，去掉中间空格回车等。
+//                String data = JSON.toJSONString(info);
+
 //                JSONObject jsonObject = JSONObject.parseObject(info);
 //                Workshop workshop = new Workshop();
 //                workshop.setHeight(jsonObject.getFloat("height"));
@@ -199,8 +204,12 @@ public class ClientSocket implements Runnable{
 //                workshopService.create(workshop);
 
                 RunningData runningData = String2RunningData(info);
-                clientSocket.runningDataService.create(runningData);
-                System.out.println(info);
+                if (runningData != null) {
+                    clientSocket.runningDataService.create(runningData);
+                    System.out.println(info);
+                } else {
+                    System.out.println("信息为空");
+                }
             }
         } catch (IOException e) {
             System.out.println("客户端已断开");
