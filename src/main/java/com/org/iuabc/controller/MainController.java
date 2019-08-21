@@ -45,7 +45,7 @@ public class MainController {
                 User user = userService.authorizeUser(username, password);
                 if (user != null) {
                     httpSession.setAttribute("user", user);
-                    return "redirect:/index/";
+                    return "redirect:/index";
                 } else {
                     httpSession.setAttribute("failMsg", "用户名或密码不正确！");
                     isReload = false;

@@ -48,7 +48,7 @@
                     </div>
                     <div class="profile_info">
                         <span>Welcome !</span>
-                        <h2>Xiong fei</h2>
+                        <h2>${Session.user.userName}</h2>
                     </div>
                 </div>
                 <!-- /menu profile quick info -->
@@ -124,7 +124,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
                             <a href="javascript:" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <img src="/images/img.jpg" alt="">Xiong fei
+                                <img src="/images/img.jpg" alt="">${Session.user.userName}
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
