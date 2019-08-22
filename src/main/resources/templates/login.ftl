@@ -149,47 +149,21 @@
                 </ol>
                 <div class="carousel-inner">
                     <div class="item active">
-                        <img alt="" src="http://cdn.ibootstrap.cn/lorempixel.com/1600/500/sports/1/default.jpg"/>
-                        <div class="carousel-caption">
-                            <h4>
-                                First Thumbnail label
-                            </h4>
-                            <p>
-                                Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta
-                                gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                            </p>
-                        </div>
+                        <img alt="" src="images/factory.jpg" style="margin: 0 auto;height: 450px;width: 800px"/>
                     </div>
                     <div class="item">
-                        <img alt="" src="http://cdn.ibootstrap.cn/lorempixel.com/1600/500/sports/2/default.jpg"/>
-                        <div class="carousel-caption">
-                            <h4>
-                                Second Thumbnail label
-                            </h4>
-                            <p>
-                                Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta
-                                gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                            </p>
-                        </div>
+                        <img alt="" src="images/crane1.jpg" style="margin: 0 auto;height: 450px;width:800px"/>
                     </div>
                     <div class="item">
-                        <img alt="" src="http://cdn.ibootstrap.cn/lorempixel.com/1600/500/sports/3/default.jpg"/>
-                        <div class="carousel-caption">
-                            <h4>
-                                Third Thumbnail label
-                            </h4>
-                            <p>
-                                Cras justo odio, dapibus ac facilisis in, egestas eget quam. Donec id elit non mi porta
-                                gravida at eget metus. Nullam id dolor id nibh ultricies vehicula ut id elit.
-                            </p>
-                        </div>
+                        <img alt="" src="images/crane2.jpg" style="margin: 0 auto;height: 450px;width: 800px"/>
                     </div>
                 </div>
-                <a class="left carousel-control" href="#carousel-998954" data-slide="prev"><span
-                            class="glyphicon glyphicon-chevron-left"></span></a> <a class="right carousel-control"
-                                                                                    href="#carousel-998954"
-                                                                                    data-slide="next"><span
-                            class="glyphicon glyphicon-chevron-right"></span></a>
+                <a class="left carousel-control" href="#carousel-998954" data-slide="prev">
+                    <span class="glyphicon glyphicon-chevron-left"></span>
+                </a>
+                <a class="right carousel-control" href="#carousel-998954" data-slide="next">
+                    <span class="glyphicon glyphicon-chevron-right"></span>
+                </a>
             </div>
         </div>
         <div class="col-md-3 column" style="margin-top: 100px">
@@ -201,12 +175,14 @@
                 </div>
                 <div class="form-group">
                     <label for="exampleInputPassword1">密码</label>
-                    <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码" required
+                    <input type="password" class="form-control" id="password" name="password" placeholder="请输入密码"
+                           required
                            autofocus/>
                 </div>
                 <div class="form-group">
                     <label>验证码</label><br>
-                    <input type="text" class="form-control" id="verification" maxlength="4" style="width:65%;display: inline"
+                    <input type="text" class="form-control" id="verification" maxlength="4"
+                           style="width:65%;display: inline"
                            placeholder="请输入验证码(不区分大小写)" required autofocus/>
                     <div style="float: right;width: 34%;">
                         <div class="code" id="checkCode" onclick="createCode()"></div>
@@ -227,7 +203,7 @@
                 </p>
             </#if>
             <#if Session["failMsg"]??>
-                <#--如果failMsg不为空-->
+            <#--如果failMsg不为空-->
                 <p id="failMsg">
                     <span style="color: #f83532;font-weight: bold;font-size: 16px">
                         ${Session.failMsg}

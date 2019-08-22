@@ -39,7 +39,7 @@ public class PathPlanningController {
 
     @RequestMapping("/staticState")
     public ModelAndView staticState(Map<String, Object> map) {
-        Workshop workshop = workshopService.findById(2L);
+        Workshop workshop = workshopService.findById(1L);
         map.put("workshop", workshop);
         return new ModelAndView("path/static_state", map);
     }
