@@ -59,6 +59,12 @@ public class MainController {
         }
     }
 
+    @RequestMapping("/logout")
+    public String logout(HttpSession session){
+        session.removeAttribute("user");
+        return "login";
+    }
+
     @RequestMapping("/index")
     public ModelAndView index() {
         return new ModelAndView("index");
