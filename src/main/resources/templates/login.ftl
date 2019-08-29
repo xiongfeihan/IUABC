@@ -149,13 +149,13 @@
                 </ol>
                 <div class="carousel-inner">
                     <div class="item active">
-                        <img alt="" src="images/factory.jpg" style="margin: 0 auto;height: 450px;width: 800px"/>
+                        <img alt="" src="/images/factory.jpg" style="margin: 0 auto;height: 450px;width: 800px"/>
                     </div>
                     <div class="item">
-                        <img alt="" src="images/crane1.jpg" style="margin: 0 auto;height: 450px;width:800px"/>
+                        <img alt="" src="/images/crane1.jpg" style="margin: 0 auto;height: 450px;width:800px"/>
                     </div>
                     <div class="item">
-                        <img alt="" src="images/crane2.jpg" style="margin: 0 auto;height: 450px;width: 800px"/>
+                        <img alt="" src="/images/crane2.jpg" style="margin: 0 auto;height: 450px;width: 800px"/>
                     </div>
                 </div>
                 <a class="left carousel-control" href="#carousel-998954" data-slide="prev">
@@ -189,12 +189,9 @@
                         <a class="yz" onclick="createCode()">看不清换一张</a>
                     </div>
                 </div>
-                <div class="checkbox">
-                    <label><input type="checkbox"/>记住我</label>
-                </div>
-                <button id="submit" type="submit" class="btn btn-lg btn-primary btn-block">登&nbsp;&nbsp;录
-                </button>
+                <button id="submit" type="submit" class="btn btn-lg btn-primary btn-block" style="margin-top: 25px">登&nbsp;&nbsp;录</button>
             </form>
+            <a href="/toRegister" class="btn btn-lg btn-warning btn-block" style="margin-top: 25px">注&nbsp;&nbsp;册</a>
             <#if Session["msg"]??>
                 <p id="msg">
                     <span style="color: #f83532;font-weight: bold;font-size: 16px">

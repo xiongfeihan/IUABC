@@ -309,7 +309,6 @@
                                             <input class="btn btn-primary" type="reset" value="重置">
                                         </div>
                                     </div>
-
                                 </form>
                             </div>
                         </div>
@@ -482,14 +481,14 @@
             }
         });
         $('#telephone').change(function () {
-            var telMatch = /^[1][3,4,5,7,8][0-9]{9}$/;
+            var telMatch = /^[1][3-8][0-9]{9}$/;
             if (!telMatch.test($(this).val())) {
                 alert("请输入标准的电话号码！");
                 $(this).val("");
             }
         });
         $('#email').change(function () {
-            var mailMatch = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+            var mailMatch = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;
             if (!mailMatch.test($(this).val())) {
                 alert("请输入标准的邮箱账号！");
                 $(this).val("");
@@ -523,11 +522,11 @@
                         "userJson" : userJson
                     },
                     success : function (data) {
-                        if (data === 0) {
+                        if (data === false) {
                             alert("发生错误！");
                         } else {
                             alert("新增用户成功！");
-                            location.reload(true);
+                            window.location.reload();
                         }
                     },
                     error : function () {
@@ -551,11 +550,11 @@
                         "userId" : userId
                     },
                     success : function (data) {
-                        if (data <= 0) {
+                        if (data === 0) {
                             alert("删除用户失败！");
                         } else {
                             alert("删除用户成功！");
-                            location.reload(true);
+                            window.location.reload();
                         }
                     },
                     error : function () {

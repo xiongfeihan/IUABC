@@ -4,7 +4,10 @@ import com.org.iuabc.entity.User;
 import com.org.iuabc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -59,8 +62,22 @@ public class MainController {
         }
     }
 
+    /**
+     * 去注册页
+     */
+    @RequestMapping("/toRegister")
+    public String toRegister(){
+        return "register";
+    }
+
+    @PostMapping("/register")
+    @ResponseBody
+    public Integer register(@RequestParam("userJson") String user){
+        return userService.save(user);
+    }
+
     @RequestMapping("/logout")
-    public String logout(HttpSession session){
+    public String  logout(HttpSession session){
         session.removeAttribute("user");
         return "login";
     }
