@@ -19,7 +19,6 @@
     <!-- Custom Theme Style -->
     <link href="/css/custom.min.css" rel="stylesheet">
 </head>
-
 <body>
 <#--系统介绍的遮罩窗体-->
 <div class="modal fade" id="modal-container-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -88,7 +87,7 @@
     </div>
 </div>
 <div class="row clearfix" style="margin-top: 75px">
-    <form id="registerForm" class="form-horizontal form-label-left">
+    <form id="registerForm" class="form-horizontal form-label-left" action="javascript:">
         <div class="form-group">
             <label class="control-label col-md-5" for="userName">姓名<span class="required">*</span>
             </label>
@@ -97,18 +96,10 @@
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-md-5">性别<span class="required">*</span></label>
-            <div class="col-md-2">
-                <div id="gender" class="btn-group" data-toggle="buttons">
-                    <label class="btn btn-default" data-toggle-class="btn-primary"
-                           data-toggle-passive-class="btn-default">
-                        <input type="radio" name="gender" value="male"> &nbsp; 男 &nbsp;
-                    </label>
-                    <label class="btn btn-primary" data-toggle-class="btn-primary"
-                           data-toggle-passive-class="btn-default">
-                        <input type="radio" name="gender" value="female"> &nbsp; 女 &nbsp;
-                    </label>
-                </div>
+            <label class="control-label col-md-5" for="gender">性别<span class="required">*</span></label>
+            <div class="col-md-2 form-check form-check-inline" id="gender">
+                <label class="btn btn-primary"><input type="radio" value="male" name="gender" checked="checked">男</label>
+                <label class="btn btn-danger"><input type="radio" value="female" name="gender">女</label>
             </div>
         </div>
         <div class="form-group">
@@ -150,7 +141,7 @@
         <br>
         <div class="form-group">
             <div class="col-md-2 col-md-offset-5">
-                <button id="insertUserBtn" type="submit" class="btn btn-block btn-warning">注&nbsp;&nbsp;册</button>
+                <button type="submit" class="btn btn-block btn-warning">注&nbsp;&nbsp;册</button>
             </div>
         </div>
     </form>
@@ -163,90 +154,74 @@
 <script src="/vendors/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap -->
 <script src="/vendors/bootstrap/dist/js/bootstrap.min.js"></script>
-
 <!-- Custom Theme Scripts -->
 <script src="/js/custom.min.js"></script>
-
-<script type="text/javascript" src="/js/register.js"></script>
-
-
-
-<#--<script type="text/javascript">-->
-<#--    $(function () {-->
-<#--        $("#userName", this).change(function () {-->
-<#--            var userName = $(this).val();-->
-<#--            if (userName.length === 0 || userName.length > 20) {-->
-<#--                alert("用户名不能为空，且最大长度限制20位字符");-->
-<#--                $(this).val("");-->
-<#--            }-->
-<#--        });-->
-
-<#--        $("#password", this).change(function () {-->
-<#--            var passMatch = /^[a-zA-Z\d]{6,16}$/;-->
-<#--            if (!passMatch.test($(this).val())) {-->
-<#--                alert("密码请设置为6-16位的数字字母组合！");-->
-<#--                $(this).val("");-->
-<#--            }-->
-<#--        });-->
-<#--        $("#passwordConfirm", this).change(function () {-->
-<#--            var confirm = $(this).val();-->
-<#--            var password = $("#password").val();-->
-<#--            if (confirm !== password) {-->
-<#--                alert("两次填写的新增用户密码不一致，请重新填写！");-->
-<#--                $(this).val("");-->
-<#--            }-->
-<#--        });-->
-<#--        $("#telephone",this).change(function () {-->
-<#--            var telMatch = /^[1][3-8][0-9]{9}$/;-->
-<#--            if (!telMatch.test($(this).val())) {-->
-<#--                alert("请输入标准的11位电话号码！");-->
-<#--                $(this).val("");-->
-<#--            }-->
-<#--        });-->
-<#--        $("#email",this).change(function () {-->
-<#--            var mailMatch = /^[a-zA-Z0-9_-]+@[a-zA-Z0-9_-]+(\.[a-zA-Z0-9_-]+)+$/;-->
-<#--            if (!mailMatch.test($(this).val())) {-->
-<#--                alert("请输入标准的邮箱账号！");-->
-<#--                $(this).val("");-->
-<#--            }-->
-<#--        });-->
-
-<#--        /*用户注册触发事件*/-->
-<#--        $("#insertUserBtn", this).on("click", function () {-->
-<#--            var userStr = {-->
-<#--                "userName": $('#userName').val(),-->
-<#--                "gender": $('#gender input[name="gender"]:checked ').val(),-->
-<#--                "telephone": $('#telephone').val(),-->
-<#--                "email": $('#email').val(),-->
-<#--                "password": $('#password').val(),-->
-<#--                "privilege": $('#privilege').find("option:selected").val()-->
-<#--            };-->
-<#--            var userJson = JSON.stringify(userStr);-->
-<#--            $.ajax({-->
-<#--                type: "post",-->
-<#--                url: "/register",-->
-<#--                dataType: "json",-->
-<#--                data: {-->
-<#--                    "userJson": userJson-->
-<#--                },-->
-<#--                success: function (result) {-->
-<#--                    if (result === 1) {-->
-<#--                        if(confirm("注册成功!点击'确定'进入登录页面")){-->
-<#--                            window.location.href = "/";-->
-<#--                        }else{-->
-<#--                            window.location.reload();-->
-<#--                        }-->
-<#--                    } else {-->
-<#--                        alert("注册失败！");-->
-<#--                    }-->
-<#--                },-->
-<#--                error: function () {-->
-<#--                    alert("出现未知错误！");-->
-<#--                }-->
-<#--            })-->
-<#--        });-->
-<#--    })-->
-<#--</script>-->
-
+<script type="text/javascript">
+    $(function () {
+        $("#userName", this).change(function () {
+            var userName = $(this).val();
+            if (userName.length === 0 || userName.length > 20) {
+                alert("用户名不能为空，且最大长度限制20位字符");
+                $(this).val("");
+            }
+        });
+        $("#password", this).change(function () {
+            var passMatch = /^[a-zA-Z\d]{6,16}$/;
+            if (!passMatch.test($(this).val())) {
+                alert("密码请设置为6-16位的数字字母组合！");
+                $(this).val("");
+            }
+        });
+        $("#passwordConfirm", this).change(function () {
+            var confirm = $(this).val();
+            var password = $("#password").val();
+            if (confirm !== password) {
+                alert("两次填写的新增用户密码不一致，请重新填写！");
+                $(this).val("");
+            }
+        });
+        $("#telephone",this).change(function () {
+            var telMatch = /^[1][3-8][0-9]{9}$/;
+            if (!telMatch.test($(this).val())) {
+                alert("请输入标准的11位电话号码！");
+                $(this).val("");
+            }
+        });
+        /*用户注册触发事件*/
+        $("#registerForm", this).submit(function () {
+            var userStr = {
+                "userName": $('#userName').val(),
+                "gender": $("#gender input:radio:checked").val(),
+                "telephone": $('#telephone').val(),
+                "email": $('#email').val(),
+                "password": $('#password').val(),
+                "privilege": $('#privilege').find("option:selected").val()
+            };
+            var userJson = JSON.stringify(userStr);
+            $.ajax({
+                type: "post",
+                url: "/register",
+                dataType: "json",
+                data: {
+                    "userJson": userJson
+                },
+                success: function (result) {
+                    if (result === true) {
+                        if(confirm("注册成功!点击'确定'进入登录页面")){
+                            window.location.href = "/";
+                        }else{
+                            window.location.reload();
+                        }
+                    } else {
+                        alert("注册失败！");
+                    }
+                },
+                error: function () {
+                    alert("出现未知错误！");
+                }
+            })
+        });
+    })
+</script>
 </body>
 </html>

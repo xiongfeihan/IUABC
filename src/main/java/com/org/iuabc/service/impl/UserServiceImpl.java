@@ -5,6 +5,7 @@ import com.org.iuabc.dao.UserDao;
 import com.org.iuabc.entity.User;
 import com.org.iuabc.service.UserService;
 import com.org.iuabc.utils.KeyUtil;
+import com.org.iuabc.utils.Md5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -40,7 +41,7 @@ public class UserServiceImpl implements UserService {
         user.setTelephone(jsonObject.getString("telephone"));
         user.setEmail(jsonObject.getString("email"));
         user.setPrivilege(Integer.valueOf(jsonObject.getString("privilege")));
-        user.setPassword(jsonObject.getString("password"));
+        user.setPassword(Md5Util.StringInMd5(jsonObject.getString("password")));//避免明文存储，对密码进行MD5加密
         try{
             userDao.save(user);
             return 1;

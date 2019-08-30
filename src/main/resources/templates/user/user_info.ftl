@@ -365,7 +365,7 @@
                                         <#if user.privilege == 2>普通用户</#if>
                                     </td>
                                     <td>${user.createTime}</td>
-                                    <td><a class="delete">删除</a></td>
+                                    <td><a class="delete" style="cursor: pointer">删除</a></td>
                                 </tr>
                                 </#list>
                             </tbody>

@@ -2,6 +2,7 @@ package com.org.iuabc.controller;
 
 import com.org.iuabc.entity.User;
 import com.org.iuabc.service.UserService;
+import com.org.iuabc.utils.Md5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,7 +46,7 @@ public class MainController {
             return "redirect:/";
         } else {
             try {
-                User user = userService.authorizeUser(username, password);
+                User user = userService.authorizeUser(username, Md5Util.StringInMd5(password));//验证明文密码转换后的密文密码
                 if (user != null) {
                     httpSession.setAttribute("user", user);
                     return "redirect:/index";
@@ -72,8 +73,8 @@ public class MainController {
 
     @PostMapping("/register")
     @ResponseBody
-    public Integer register(@RequestParam("userJson") String user){
-        return userService.save(user);
+    public Boolean register(@RequestParam("userJson") String user){
+        return userService.save(user) == 1;
     }
 
     @RequestMapping("/logout")
