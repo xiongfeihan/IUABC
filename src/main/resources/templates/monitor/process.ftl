@@ -648,35 +648,32 @@
         ]
     };
 
-    var flag = "${status}";
 
     setInterval(function () {
-        if (flag == "running") {
-            $.ajax({
-                type : "get",
-                url : "/realTime/monitor/getLatestData",
-                dataType : "json",
-                data : {
 
-                },
-                success : function (d) {
-                    if (d.code == "success") {
-                        option.series[0].data[0].value = d.data.cartSpeed.toFixed(2);
-                        myChart.setOption(option, true);
-                    }
-                },
-                error : function () {
-                    alert("失败");
+        $.ajax({
+            type : "get",
+            url : "/realTime/monitor/getLatestData",
+            dataType : "json",
+            data : {
+
+            },
+            success : function (d) {
+                if (d.status == "running") {
+                    option.series[0].data[0].value = d.data.cartSpeed.toFixed(2);
+                    myChart.setOption(option, true);
+                } else {
+                    option.series[0].data[0].value = 0;
+                    myChart.setOption(option, true);
                 }
-            })
-        } else {
-            // option.series[0].data[0].value = (Math.random() * 60).toFixed(2) - 0;
-            option.series[0].data[0].value = 0;
-            myChart.setOption(option, true);
-        }
+            },
+            error : function () {
+                alert("失败");
+            }
+        })
 
     },1000);
-    ;
+
     if (option && typeof option === "object") {
         myChart.setOption(option, true);
     }

@@ -49,13 +49,13 @@ public class RunningDataServiceImplTest {
         int count = 0;
         for (int i = 0; i < 100; i++) {
             RunningData data = new RunningData();
-            data.setCartSpeed((float) (Math.random()*10));
+            data.setCartSpeed((float) (Math.random()*60));
             data.setCartLevel(2);
             data.setCartPosition((float) (Math.random()*50));
-            data.setCrabSpeed((float) (Math.random()*10));
+            data.setCrabSpeed((float) (Math.random()*40));
             data.setCrabPosition((float) (Math.random()*50));
             data.setCrabLevel(1);
-            data.setHoistSpeed((float) (Math.random()*10));
+            data.setHoistSpeed((float) (Math.random()*30));
             data.setHoistPosition((float) (Math.random()*50));
             data.setHoistLevel(3);
             data.setCraneId(1L);
