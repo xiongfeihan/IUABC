@@ -1,6 +1,8 @@
 package com.org.iuabc.controller;
 
+import com.org.iuabc.entity.BasicInfo;
 import com.org.iuabc.entity.RunningData;
+import com.org.iuabc.service.BasicInfoService;
 import com.org.iuabc.service.RunningDataService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -28,13 +30,19 @@ public class RealTimeMonitorController {
     private RunningDataService dataService;
 
     @Autowired
+    private BasicInfoService basicInfoService;
+
+    @Autowired
     public void setDataService(RunningDataService dataService) {
         this.dataService = dataService;
     }
 
     @RequestMapping("/process")
     public ModelAndView process() {
-        return new ModelAndView("monitor/process");
+        Map<String, Object> map = new HashMap<>();
+        BasicInfo info = basicInfoService.findById(1L);
+        map.put("info", info);
+        return new ModelAndView("monitor/process", map);
     }
 
     @RequestMapping("/warning")
