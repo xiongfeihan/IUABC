@@ -88,7 +88,7 @@
                             </li>
                             <li><a><i class="fa fa-clone"></i> 用户管理 <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="/user/manage/list+${Session.user.privilege}">用户信息</a></li>
+                                    <li><a href="/user/manage/list">用户信息</a></li>
                                     <li><a href="/user/manage/operateLog">操作日志</a></li>
                                 </ul>
                             </li>
@@ -266,7 +266,11 @@
                                     <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-5">
                                         <button type="button" class="btn btn-primary" id="generate_path">生成路径</button>
                                         <button class="btn btn-primary" type="reset" id="reset">重置</button>
-                                        <button type="button" class="btn btn-success" id="run">运行</button>
+                                        <button type="button" class="btn btn-success" id="run"
+                                                <#if access != 1>
+                                                    disabled="true" title="无权限"
+                                                </#if>
+                                                >运行</button>
                                     </div>
                                 </div>
 

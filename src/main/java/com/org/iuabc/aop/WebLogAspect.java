@@ -41,7 +41,9 @@ public class WebLogAspect {
     private Long  LOG_ID;
 
     //初始URL：“localhost:8080/”不记录，不作为切面
-    @Pointcut("execution(public * com.org.iuabc.controller.*.*(..)) && !execution(public * com.org.iuabc.controller.MainController.root(..))")
+    @Pointcut("execution(public * com.org.iuabc.controller.*.*(..))" +
+            " && !execution(public * com.org.iuabc.controller.MainController.root(..))" +
+            " && !execution(public * com.org.iuabc.controller.RealTimeMonitorController.getLatestData(..))")
     public void webLog() {
     }
 
