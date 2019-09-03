@@ -85,7 +85,7 @@
                             </li>
                             <li><a><i class="fa fa-clone"></i> 用户管理 <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="/user/manage/list">用户信息</a></li>
+                                    <li><a href="/user/manage/list+${Session.user.privilege}">用户信息</a></li>
                                     <li><a href="/user/manage/operateLog">操作日志</a></li>
                                 </ul>
                             </li>
