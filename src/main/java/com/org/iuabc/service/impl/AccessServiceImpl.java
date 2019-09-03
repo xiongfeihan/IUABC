@@ -16,9 +16,7 @@ public class AccessServiceImpl implements AccessService {
     private UserService userService;
 
     @Override
-    public Boolean isSuperOrNot(String userId) {
-        Integer access = userService.getAccess(userId);
-        return access == 1;
+    public Integer getAccess(String userId) {
+        return userService.getAccess(userId);
     }
-
 }

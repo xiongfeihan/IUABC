@@ -1,6 +1,8 @@
 package com.org.iuabc.controller;
 
+import com.org.iuabc.entity.User;
 import com.org.iuabc.entity.Workshop;
+import com.org.iuabc.service.AccessService;
 import com.org.iuabc.service.RunningDataService;
 import com.org.iuabc.service.WorkshopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.Map;
 
 /**
@@ -28,6 +32,9 @@ public class PathPlanningController {
     private RunningDataService runningDataService;
 
     @Autowired
+    private AccessService accessService;
+
+    @Autowired
     public void setWorkshopService(WorkshopService workshopService) {
         this.workshopService = workshopService;
     }
@@ -38,9 +45,13 @@ public class PathPlanningController {
     }
 
     @RequestMapping("/staticState")
-    public ModelAndView staticState(Map<String, Object> map) {
+    public ModelAndView staticState(Map<String, Object> map, HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        User user = (User) session.getAttribute("user");
+        Integer access = accessService.getAccess(user.getUserId());
         Workshop workshop = workshopService.findById(1L);
         map.put("workshop", workshop);
+        map.put("access", access);
         return new ModelAndView("path/static_state", map);
     }
 

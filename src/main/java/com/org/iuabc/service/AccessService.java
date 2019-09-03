@@ -7,6 +7,6 @@ package com.org.iuabc.service;
 public interface AccessService {
 
     // 判断用户是否有管理员权限
-    Boolean isSuperOrNot(String userId);
+    Integer getAccess(String userId);
 
 }
