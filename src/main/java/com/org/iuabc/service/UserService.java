@@ -22,4 +22,7 @@ public interface UserService {
 
     // 验证用户名密码
     User authorizeUser(String username, String password);
+
+    // 查询用户权限
+    Integer getAccess(String userId);
 }
