@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="icon" href="/images/favicon.ico" type="image/ico" />
+    <link rel="icon" href="/images/favicon.ico" type="image/ico"/>
 
     <title>IUABC</title>
 
@@ -56,7 +56,7 @@
                 </div>
                 <!-- /menu profile quick info -->
 
-                <br />
+                <br/>
 
                 <!-- sidebar menu -->
                 <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
@@ -88,7 +88,7 @@
                             </li>
                             <li><a><i class="fa fa-clone"></i> 用户管理 <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
-                                    <li><a href="/user/manage/list">用户信息</a></li>
+                                    <li><a href="/user/manage/list+${Session.user.privilege}">用户信息</a></li>
                                     <li><a href="/user/manage/operateLog">操作日志</a></li>
                                 </ul>
                             </li>
@@ -126,7 +126,8 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
-                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                               aria-expanded="false">
                                 <img src="/images/img.jpg" alt="">${Session.user.userName}
                                 <span class=" fa fa-angle-down"></span>
                             </a>
@@ -144,14 +145,15 @@
                         </li>
 
                         <li role="presentation" class="dropdown">
-                            <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown" aria-expanded="false">
+                            <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown"
+                               aria-expanded="false">
                                 <i class="fa fa-envelope-o"></i>
                                 <span class="badge bg-green">6</span>
                             </a>
                             <ul id="menu1" class="dropdown-menu list-unstyled msg_list" role="menu">
                                 <li>
                                     <a>
-                                        <span class="image"><img src="/images/img.jpg" alt="Profile Image" /></span>
+                                        <span class="image"><img src="/images/img.jpg" alt="Profile Image"/></span>
                                         <span>
                                             <span>John Smith</span>
                                             <span class="time">3 mins ago</span>
@@ -163,7 +165,7 @@
                                 </li>
                                 <li>
                                     <a>
-                                        <span class="image"><img src="/images/img.jpg" alt="Profile Image" /></span>
+                                        <span class="image"><img src="/images/img.jpg" alt="Profile Image"/></span>
                                         <span>
                                             <span>John Smith</span>
                                             <span class="time">3 mins ago</span>
@@ -175,7 +177,7 @@
                                 </li>
                                 <li>
                                     <a>
-                                        <span class="image"><img src="/images/img.jpg" alt="Profile Image" /></span>
+                                        <span class="image"><img src="/images/img.jpg" alt="Profile Image"/></span>
                                         <span>
                                             <span>John Smith</span>
                                             <span class="time">3 mins ago</span>
@@ -187,7 +189,7 @@
                                 </li>
                                 <li>
                                     <a>
-                                        <span class="image"><img src="/images/img.jpg" alt="Profile Image" /></span>
+                                        <span class="image"><img src="/images/img.jpg" alt="Profile Image"/></span>
                                         <span>
                                             <span>John Smith</span>
                                             <span class="time">3 mins ago</span>
@@ -215,18 +217,68 @@
 
         <!-- page content -->
         <div class="right_col" role="main">
-            <b>主体页面还未开发，敬请期待！</b>
+            <div class="x_panel">
+                <div class="x_title">
+                    <h2>用户日志</h2>
+                    <ul class="nav navbar-right panel_toolbox">
+                        <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
+                               aria-expanded="false"><i class="fa fa-wrench"></i></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Settings 1</a>
+                                </li>
+                                <li><a href="#">Settings 2</a>
+                                </li>
+                            </ul>
+                        </li>
+                        <li><a class="close-link"><i class="fa fa-close"></i></a>
+                        </li>
+                    </ul>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="x_content">
+                    <table id="table1" class="table table-striped table-bordered" >
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>姓名</th>
+                            <th>IP</th>
+                            <th>URL</th>
+                            <th>方法</th>
+                            <th>参数</th>
+                            <th>请求时间</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <#list logList as log>
+                            <tr>
+                                <td>${log.logId}</td>
+                                <td>${log.guestName}</td>
+                                <td>${log.reqIp}</td>
+                                <td>${log.reqUrl}</td>
+                                <td>${log.reqMethod}</td>
+                                <td>${log.reqArgs}</td>
+                                <td>${log.beginTime}</td>
+                            </tr>
+                        </#list>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
 
-        <!-- footer content -->
-        <footer>
-            <div class="pull-right">
-                Crane Monitor System by <a href="https://www.tongji.edu.cn/">TongJi University</a>
-            </div>
-            <div class="clearfix"></div>
-        </footer>
-        <!-- /footer content -->
     </div>
+
+    <!-- footer content -->
+    <footer>
+        <div class="pull-right">
+            Crane Monitor System by <a href="https://www.tongji.edu.cn/">TongJi University</a>
+        </div>
+        <div class="clearfix"></div>
+    </footer>
+    <!-- /footer content -->
 </div>
 
 <!-- jQuery -->
@@ -287,11 +339,28 @@
 <script src="/vendors/pdfmake/build/pdfmake.min.js"></script>
 <script src="/vendors/pdfmake/build/vfs_fonts.js"></script>
 
-<!-- bootstrap-datetimepicker -->
-<script src="/vendors/bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>-->
-
 <!-- Custom Theme Scripts -->
 <script src="/js/custom.min.js"></script>
+
+<script>
+    $(function () {
+        $('#table1',this).DataTable({
+            paging   : true,
+            lengthChange: true,
+            searching  : true,
+            ordering   : true,
+            autoWidth   : true,
+
+            sortable : true, //是否启用排序
+            sortOrder : 请求时间, "desc", //排序方式
+            sidePagination : client, //分页方式：client客户端分页，server服务端分页（*）
+            pagination : true, //是否显示分页（*）
+            pageNumber : ended, //初始化加载最后一页
+            pageSize : 10, //每页的记录行数（*）
+            pageList : [ 10, 15, 20, 30, 100 ]//可供选择的每页的行数（*）
+        })
+    })
+</script>
 
 </body>
 </html>
