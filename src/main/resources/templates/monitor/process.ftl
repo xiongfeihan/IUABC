@@ -252,47 +252,52 @@
                                             <#--<span id="goal-text1" class="goal-value pull-right" style="padding-right: 15%">60m/min</span>-->
                                         <#--</div>-->
                                     <#--</div>-->
-                                    <div id="container" style="width: 100%; height: 160%"></div>
+                                    <div id="cart_speed_container" style="width: 100%; height: 160%"></div>
                                 </div>
                                 <div class="col-md-2">
-                                    <div class="canvas-center">
-                                        <h4>小车速度:15m/min</h4>
-                                        <canvas width="150" height="80" id="chart_gauge_02" class="" style="width: 160px; height: 100px;"></canvas>
-                                        <div class="goal-wrapper">
-                                            <span id="gauge-text2" class="gauge-value pull-left" style="padding-left: 15%">0</span>
-                                            <span class="gauge-value pull-left">m/min</span>
-                                            <span id="goal-text2" class="goal-value pull-right" style="padding-right: 15%">40m/min</span>
-                                        </div>
-                                    </div>
+                                    <#--<div class="canvas-center">-->
+                                        <#--<h4>小车速度:15m/min</h4>-->
+                                        <#--<canvas width="150" height="80" id="chart_gauge_02" class="" style="width: 160px; height: 100px;"></canvas>-->
+                                        <#--<div class="goal-wrapper">-->
+                                            <#--<span id="gauge-text2" class="gauge-value pull-left" style="padding-left: 15%">0</span>-->
+                                            <#--<span class="gauge-value pull-left">m/min</span>-->
+                                            <#--<span id="goal-text2" class="goal-value pull-right" style="padding-right: 15%">40m/min</span>-->
+                                        <#--</div>-->
+                                    <#--</div>-->
+                                    <div id="crab_speed_container" style="width: 100%; height: 160%"></div>
                                 </div>
                                 <div class="col-md-2">
-                                    <div class="canvas-center">
-                                        <h4>起升速度:4m/min</h4>
-                                        <canvas width="150" height="80" id="chart_gauge_03" class="" style="width: 160px; height: 100px;"></canvas>
-                                        <div class="goal-wrapper">
-                                            <span id="gauge-text3" class="gauge-value pull-left" style="padding-left: 15%">0</span>
-                                            <span class="gauge-value pull-left">m/min</span>
-                                            <span id="goal-text3" class="goal-value pull-right" style="padding-right: 15%">6m/min</span>
-                                        </div>
-                                    </div>
+                                    <#--<div class="canvas-center">-->
+                                        <#--<h4>起升速度:4m/min</h4>-->
+                                        <#--<canvas width="150" height="80" id="chart_gauge_03" class="" style="width: 160px; height: 100px;"></canvas>-->
+                                        <#--<div class="goal-wrapper">-->
+                                            <#--<span id="gauge-text3" class="gauge-value pull-left" style="padding-left: 15%">0</span>-->
+                                            <#--<span class="gauge-value pull-left">m/min</span>-->
+                                            <#--<span id="goal-text3" class="goal-value pull-right" style="padding-right: 15%">6m/min</span>-->
+                                        <#--</div>-->
+                                    <#--</div>-->
+                                    <div id="hoist_speed_container" style="width: 100%; height: 160%"></div>
                                 </div>
                                 <div class="col-md-2">
-                                    <div class="canvas-center">
-                                        <h4>大车行程</h4>
-                                        <input class="knob" data-width="100" data-height="100" data-max="60" data-min="0" data-displayPrevious=true data-fgColor="#26B99A" value="44.9">
-                                    </div>
+                                    <#--<div class="canvas-center">-->
+                                        <#--<h4>大车行程</h4>-->
+                                        <#--<input class="knob" data-width="100" data-height="100" data-max="60" data-min="0" data-displayPrevious=true data-fgColor="#26B99A" value="44.9">-->
+                                    <#--</div>-->
+                                    <div id="cart_position_container" style="width: 100%; height: 160%"></div>
                                 </div>
                                 <div class="col-md-2">
-                                    <div class="canvas-center">
-                                        <h4>小车行程</h4>
-                                        <input class="knob" data-width="100" data-height="100" data-max="40" data-min="0" data-displayPrevious=true data-fgColor="#26B99A" data-step=".1" value="15.2">
-                                    </div>
+                                    <#--<div class="canvas-center">-->
+                                        <#--<h4>小车行程</h4>-->
+                                        <#--<input class="knob" data-width="100" data-height="100" data-max="40" data-min="0" data-displayPrevious=true data-fgColor="#26B99A" data-step=".1" value="15.2">-->
+                                    <#--</div>-->
+                                    <div id="crab_position_container" style="width: 100%; height: 160%"></div>
                                 </div>
                                 <div class="col-md-2">
-                                    <div class="canvas-center">
-                                        <h4>起升高度</h4>
-                                        <input class="knob" data-width="100" data-height="100" data-max="6" data-min="0" data-displayPrevious=true data-fgColor="#26B99A" data-step=".1" value="3.2">
-                                    </div>
+                                    <#--<div class="canvas-center">-->
+                                        <#--<h4>起升高度</h4>-->
+                                        <#--<input class="knob" data-width="100" data-height="100" data-max="6" data-min="0" data-displayPrevious=true data-fgColor="#26B99A" data-step=".1" value="3.2">-->
+                                    <#--</div>-->
+                                    <div id="hoist_position_container" style="width: 100%; height: 160%"></div>
                                 </div>
                             </div>
                         </div>
@@ -580,105 +585,170 @@
 
 
 <script type="text/javascript">
-    var dom = document.getElementById("container");
-    var myChart = echarts.init(dom);
-    var app = {};
-    option = null;
-    option = {
-        tooltip : {
-            formatter: "{a} <br/>{b} : {c}m/min"
-        },
-        toolbox: {
+    // 大车速度仪表盘
+    var dom1 = document.getElementById("cart_speed_container");
+    var cartSpeedChart = echarts.init(dom1);
+    var cartSpeedOption = null;
+    cartSpeedOption = option(0, ${info.cartMaxSpeed}, "大车速度", 'm/min');
 
-        },
-        series: [
-            {
-                name: '基本信息',
-                type: 'gauge',
-                radius: "100%",
-                center: ["50%", "55%"],
-                min: 0,                 // 最小的数据值,默认 0 。映射到 minAngle。
-                max: 60,
-                detail: {
-                    show: true,             // 是否显示详情,默认 true。
-                    offsetCenter: ["-3%","80%"],// 相对于仪表盘中心的偏移位置，数组第一项是水平方向的偏移，第二项是垂直方向的偏移。可以是绝对的数值，也可以是相对于仪表盘半径的百分比。
-                    color: "auto",          // 文字的颜色,默认 auto。
-                    fontSize: 15,           // 文字的字体大小,默认 15。
-                    formatter: "{value}m/min",
-                },
-                data: [{value: 0, name: '大车速度'}],
+    // 小车速度仪表盘
+    var dom2 = document.getElementById("crab_speed_container");
+    var crabSpeedChart = echarts.init(dom2);
+    var crabSpeedOption = null;
+    crabSpeedOption = option(0, ${info.crabMaxSpeed}, "小车速度", 'm/min');
 
-                axisLine: {             // 仪表盘轴线(轮廓线)相关配置。
-                    show: true,             // 是否显示仪表盘轴线(轮廓线),默认 true。
-                    lineStyle: {            // 仪表盘轴线样式。
-                        // color: "#fff",  //仪表盘的轴线可以被分成不同颜色的多段。每段的  结束位置(范围是[0,1]) 和  颜色  可以通过一个数组来表示。默认取值：[[0.2, '#91c7ae'], [0.8, '#63869e'], [1, '#c23531']]
-                        opacity: 1,                 //图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
-                        width: 10,                  //轴线宽度,默认 30。
-                        shadowBlur: 20,             //(发光效果)图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。
-                        shadowColor: "#fff",        //阴影颜色。支持的格式同color。
-                    }
-                },
+    // 起升速度仪表盘
+    var dom3 = document.getElementById("hoist_speed_container");
+    var hoistSpeedChart = echarts.init(dom3);
+    var hoistSpeedOption = null;
+    hoistSpeedOption = option(0, ${info.hoistMaxSpeed}, "起升速度", 'm/min');
 
-                splitLine: {            // 分隔线样式。
-                    show: true,             // 是否显示分隔线,默认 true。
-                    length: 10,             // 分隔线线长。支持相对半径的百分比,默认 30。
-                    lineStyle: {            // 分隔线样式。
-                        color: "#eee",              //线的颜色,默认 #eee。
-                        opacity: 1,                 //图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
-                        width: 2,                   //线度,默认 2。
-                        type: "solid",              //线的类型,默认 solid。 此外还有 dashed,dotted
-                        shadowBlur: 10,             //(发光效果)图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。
-                        shadowColor: "#fff",        //阴影颜色。支持的格式同color。
-                    }
-                },
+    // 大车位移仪表盘
+    var dom4 = document.getElementById("cart_position_container");
+    var cartPositionChart = echarts.init(dom4);
+    var cartPositionOption = null;
+    cartPositionOption = option(0, ${info.cartMaxPosition}, "大车位移", 'm');
 
-                pointer: {              // 仪表盘指针。
-                    show: true,             // 是否显示指针,默认 true。
-                    length: "80%",          // 指针长度，可以是绝对数值，也可以是相对于半径的百分比,默认 80%。
-                    width: 6,               // 指针宽度,默认 8。
-                },
+    // 小车位移仪表盘
+    var dom5 = document.getElementById("crab_position_container");
+    var crabPositionChart = echarts.init(dom5);
+    var crabPositionOption = null;
+    crabPositionOption = option(0, ${info.crabMaxPosition}, "小车位移", 'm');
 
-                title: {                // 仪表盘标题。
-                    show: true,             // 是否显示标题,默认 true。
-                    offsetCenter: [0,"-35%"],//相对于仪表盘中心的偏移位置，数组第一项是水平方向的偏移，第二项是垂直方向的偏移。可以是绝对的数值，也可以是相对于仪表盘半径的百分比。
-                    color: "#73879C",          // 文字的颜色,默认 #333。
-                    fontSize: 15,           // 文字的字体大小,默认 15。
-                },
-            }
-        ]
-    };
+    // 起升位移仪表盘
+    var dom6 = document.getElementById("hoist_position_container");
+    var hoistPositionChart = echarts.init(dom6);
+    var hoistPositionOption = null;
+    hoistPositionOption = option(0, ${info.hoistMaxPosition}, "起升高度", 'm');
 
-    var flag = "${status}";
+    function option(min, max, name, unit) {
+        var option = {
+            tooltip : {
+                formatter: "{a} <br/>{b} : {c}" + unit
+            },
+            toolbox: {
+
+            },
+            series: [
+                {
+                    name: '基本信息',
+                    type: 'gauge',
+                    radius: "100%",
+                    center: ["50%", "55%"],
+                    min: min,                 // 最小的数据值,默认 0 。映射到 minAngle。
+                    max: max,
+                    detail: {
+                        show: true,             // 是否显示详情,默认 true。
+                        offsetCenter: ["-3%","80%"],// 相对于仪表盘中心的偏移位置，数组第一项是水平方向的偏移，第二项是垂直方向的偏移。可以是绝对的数值，也可以是相对于仪表盘半径的百分比。
+                        color: "auto",          // 文字的颜色,默认 auto。
+                        fontSize: 15,           // 文字的字体大小,默认 15。
+                        formatter: "{value}" + unit,
+                    },
+                    data: [{value: 0, name: name}],
+
+                    axisLine: {             // 仪表盘轴线(轮廓线)相关配置。
+                        show: true,             // 是否显示仪表盘轴线(轮廓线),默认 true。
+                        lineStyle: {            // 仪表盘轴线样式。
+                            // color: "#fff",  //仪表盘的轴线可以被分成不同颜色的多段。每段的  结束位置(范围是[0,1]) 和  颜色  可以通过一个数组来表示。默认取值：[[0.2, '#91c7ae'], [0.8, '#63869e'], [1, '#c23531']]
+                            opacity: 1,                 //图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+                            width: 10,                  //轴线宽度,默认 30。
+                            shadowBlur: 20,             //(发光效果)图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。
+                            shadowColor: "#fff",        //阴影颜色。支持的格式同color。
+                        }
+                    },
+
+                    splitLine: {            // 分隔线样式。
+                        show: true,             // 是否显示分隔线,默认 true。
+                        length: 10,             // 分隔线线长。支持相对半径的百分比,默认 30。
+                        lineStyle: {            // 分隔线样式。
+                            color: "#eee",              //线的颜色,默认 #eee。
+                            opacity: 1,                 //图形透明度。支持从 0 到 1 的数字，为 0 时不绘制该图形。
+                            width: 2,                   //线度,默认 2。
+                            type: "solid",              //线的类型,默认 solid。 此外还有 dashed,dotted
+                            shadowBlur: 10,             //(发光效果)图形阴影的模糊大小。该属性配合 shadowColor,shadowOffsetX, shadowOffsetY 一起设置图形的阴影效果。
+                            shadowColor: "#fff",        //阴影颜色。支持的格式同color。
+                        }
+                    },
+
+                    pointer: {              // 仪表盘指针。
+                        show: true,             // 是否显示指针,默认 true。
+                        length: "80%",          // 指针长度，可以是绝对数值，也可以是相对于半径的百分比,默认 80%。
+                        width: 6,               // 指针宽度,默认 8。
+                    },
+
+                    title: {                // 仪表盘标题。
+                        show: true,             // 是否显示标题,默认 true。
+                        offsetCenter: [0,"-35%"],//相对于仪表盘中心的偏移位置，数组第一项是水平方向的偏移，第二项是垂直方向的偏移。可以是绝对的数值，也可以是相对于仪表盘半径的百分比。
+                        color: "#73879C",          // 文字的颜色,默认 #333。
+                        fontSize: 15,           // 文字的字体大小,默认 15。
+                    },
+                }
+            ]
+        }
+        return option;
+    }
 
     setInterval(function () {
-        if (flag == "running") {
-            $.ajax({
-                type : "get",
-                url : "/realTime/monitor/getLatestData",
-                dataType : "json",
-                data : {
 
-                },
-                success : function (d) {
-                    if (d.code == "success") {
-                        option.series[0].data[0].value = d.data.cartSpeed.toFixed(2);
-                        myChart.setOption(option, true);
-                    }
-                },
-                error : function () {
-                    alert("失败");
+        $.ajax({
+            type : "get",
+            url : "/realTime/monitor/getLatestData",
+            dataType : "json",
+            data : {
+
+            },
+            success : function (d) {
+                if (d.status == "running") {
+                    cartSpeedOption.series[0].data[0].value = d.data.cartSpeed.toFixed(2);
+                    crabSpeedOption.series[0].data[0].value = d.data.crabSpeed.toFixed(2);
+                    hoistSpeedOption.series[0].data[0].value = d.data.hoistSpeed.toFixed(2);
+                    cartPositionOption.series[0].data[0].value = d.data.cartPosition.toFixed(2);
+                    crabPositionOption.series[0].data[0].value = d.data.crabPosition.toFixed(2);
+                    hoistPositionOption.series[0].data[0].value = d.data.hoistPosition.toFixed(2);
+                    refresh();
+                } else {
+                    cartSpeedOption.series[0].data[0].value = 0;
+                    crabSpeedOption.series[0].data[0].value = 0;
+                    hoistSpeedOption.series[0].data[0].value = 0;
+                    cartPositionOption.series[0].data[0].value = 0;
+                    crabPositionOption.series[0].data[0].value = 0;
+                    hoistPositionOption.series[0].data[0].value = 0;
+                    refresh();
                 }
-            })
-        } else {
-            // option.series[0].data[0].value = (Math.random() * 60).toFixed(2) - 0;
-            option.series[0].data[0].value = 0;
-            myChart.setOption(option, true);
-        }
+            },
+            error : function () {
+                alert("失败");
+            }
+        })
 
     },1000);
-    ;
-    if (option && typeof option === "object") {
-        myChart.setOption(option, true);
+
+    function refresh() {
+        cartSpeedChart.setOption(cartSpeedOption, true);
+        crabSpeedChart.setOption(crabSpeedOption, true);
+        hoistSpeedChart.setOption(hoistSpeedOption, true);
+        cartPositionChart.setOption(cartPositionOption, true);
+        crabPositionChart.setOption(crabPositionOption, true);
+        hoistPositionChart.setOption(hoistPositionOption, true);
+    }
+
+    if (cartSpeedOption && typeof cartSpeedOption === "object") {
+        cartSpeedChart.setOption(cartSpeedOption, true);
+    }
+    if (crabSpeedOption && typeof crabSpeedOption === "object") {
+        crabSpeedChart.setOption(crabSpeedOption, true);
+    }
+    if (hoistSpeedOption && typeof hoistSpeedOption === "object") {
+        hoistSpeedChart.setOption(hoistSpeedOption, true);
+    }
+    if (cartPositionOption && typeof cartPositionOption === "object") {
+        cartPositionChart.setOption(cartPositionOption, true);
+    }
+    if (crabPositionOption && typeof crabPositionOption === "object") {
+        crabPositionChart.setOption(crabPositionOption, true);
+    }
+    if (hoistPositionOption && typeof hoistPositionOption === "object") {
+        hoistPositionChart.setOption(hoistPositionOption, true);
     }
 </script>
 

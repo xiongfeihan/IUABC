@@ -64,4 +64,10 @@ public class UserServiceImpl implements UserService {
     public User authorizeUser(String username, String password) {
         return userDao.findByUserNameAndPassword(username, password);
     }
+
+    @Override
+    public Integer getAccess(String userId) {
+        User user = userDao.findByUserId(userId);
+        return user.getPrivilege();
+    }
 }

@@ -12,7 +12,7 @@ public interface RunningDataDao extends JpaRepository<RunningData, Long> {
 
     RunningData findByDataId(Long dataId);
 
-    @Query(value = "select * from running_data order by create_time desc limit 1", nativeQuery = true)
+    @Query(value = "select * from running_data order by data_id desc limit 1", nativeQuery = true)
     RunningData findLatestData();
 
 }
