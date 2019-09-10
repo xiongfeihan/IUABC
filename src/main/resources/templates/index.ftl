@@ -249,7 +249,7 @@
 
             <div class="row">
                 <div class="col-md-12 col-sm-12 col-xs-12">
-                    <div class="dashboard_graph">
+                    <div class="dashboard_graph" onclick="javascript:location.href = '/realTime/monitor/process'">
 
                         <div class="row x_title">
                             <div class="col-md-6">
@@ -322,7 +322,7 @@
 
 
                 <div class="col-md-4 col-sm-4 col-xs-12">
-                    <div class="x_panel tile fixed_height_320">
+                    <div class="x_panel tile fixed_height_320" onclick="javascript:location.href = '/equipment/manage/craneInfo'">
                         <div class="x_title">
                             <h2>设备管理</h2>
                             <ul class="nav navbar-right panel_toolbox">
@@ -431,7 +431,7 @@
                 </div>
 
                 <div class="col-md-4 col-sm-4 col-xs-12">
-                    <div class="x_panel tile fixed_height_320 overflow_hidden">
+                    <div class="x_panel tile fixed_height_320 overflow_hidden" onclick="javascript:location.href = '/path/planning/staticState'">
                         <div class="x_title">
                             <h2>路径规划</h2>
                             <ul class="nav navbar-right panel_toolbox">
@@ -512,7 +512,7 @@
 
 
                 <div class="col-md-4 col-sm-4 col-xs-12">
-                    <div class="x_panel tile fixed_height_320">
+                    <div class="x_panel tile fixed_height_320" onclick="javascript:location.href = '/user/manage/list'">
                         <div class="x_title">
                             <h2>用户管理</h2>
                             <ul class="nav navbar-right panel_toolbox">
