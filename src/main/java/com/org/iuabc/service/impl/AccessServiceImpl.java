@@ -12,8 +12,12 @@ import org.springframework.stereotype.Service;
 @Service
 public class AccessServiceImpl implements AccessService {
 
-    @Autowired
     private UserService userService;
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
     @Override
     public Integer getAccess(String userId) {
