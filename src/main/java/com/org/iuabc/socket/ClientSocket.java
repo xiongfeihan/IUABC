@@ -1,8 +1,9 @@
 package com.org.iuabc.socket;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.org.iuabc.entity.IpcInfo;
 import com.org.iuabc.entity.RunningData;
+import com.org.iuabc.service.IpcInfoService;
 import com.org.iuabc.service.RunningDataService;
 import com.org.iuabc.service.WorkshopService;
 import com.org.iuabc.service.impl.WorkshopServiceImpl;
@@ -20,6 +21,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -37,6 +39,9 @@ public class ClientSocket implements Runnable{
     @Autowired
     private WorkshopService workshopService;
 //    private WorkshopService workshopService = SpringUtil.getBean(WorkshopService.class);
+
+    @Autowired
+    private IpcInfoService ipcInfoService;
 
     public static ClientSocket clientSocket;
 
@@ -65,6 +70,7 @@ public class ClientSocket implements Runnable{
             client.setOutputStream(new DataOutputStream(socket.getOutputStream()));
             client.setKey(socket.getInetAddress().toString().substring(1));
             IuabcServerSocket.clientsMap.put(client.getKey(), client);
+
 //            byte[] bytes = new byte[1024];
 //            client.getInputStream().read(bytes);
             System.out.println("a client connected!");
@@ -277,4 +283,18 @@ public class ClientSocket implements Runnable{
         return runningData;
     }
 
+
+    /**
+     * 保存工控机连接信息
+     * @param ip 工控机IP地址
+     */
+    private static void saveIPCInfo(String ip) {
+        IpcInfo ipc = clientSocket.ipcInfoService.findByIp(ip);
+        if (ipc == null) {
+            IpcInfo ipcInfo = new IpcInfo();
+            ipcInfo.setIpcIp(ip);
+            ipcInfo.setConnectTime(new Date());
+
+        }
+    }
 }

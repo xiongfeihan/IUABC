@@ -23,9 +23,13 @@ public class IuabcServerSocket {
 
     @Value("${servers.port}")
     private Integer port;
+
     private boolean started;
+
     private ServerSocket ss;
+
     public static ConcurrentHashMap<String, ClientSocket> clientsMap = new ConcurrentHashMap<>();
+
     private ExecutorService executorService = Executors.newCachedThreadPool();
 
     public static void main(String[] args) {
