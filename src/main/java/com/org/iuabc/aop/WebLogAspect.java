@@ -75,6 +75,11 @@ public class WebLogAspect {
             args = args.substring(1,args.length()-1);
         }
 
+        //将0:0:0:0:0:0:0:1的IP地址转为127.0.0.1
+        if("0:0:0:0:0:0:0:1".equals(IP)){
+            IP = "127.0.0.1";
+        }
+
         //存入数据库
         GuestLog guestLog = new GuestLog(guestName, IP, url, method, args, beginTime);
         guestLogService.saveGuestLog(guestLog);

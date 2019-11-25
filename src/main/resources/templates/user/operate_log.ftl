@@ -24,7 +24,6 @@
     <link href="/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
     <!-- bootstrap-daterangepicker -->
     <link href="/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-
     <!-- bootstrap-datetimepicker -->
     <link href="/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
 
@@ -239,7 +238,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
-                    <table id="table1" class="table table-striped table-bordered" >
+                    <table id="datatable" class="table table-striped table-bordered">
                         <thead>
                         <tr>
                             <th>序号</th>
@@ -343,22 +342,8 @@
 <script src="/js/custom.min.js"></script>
 
 <script>
-    $(function () {
-        $('#table1',this).DataTable({
-            paging   : true,
-            lengthChange: true,
-            searching  : true,
-            ordering   : true,
-            autoWidth   : true,
-
-            sortable : true, //是否启用排序
-            sortOrder : 请求时间, "desc", //排序方式
-            sidePagination : client, //分页方式：client客户端分页，server服务端分页（*）
-            pagination : true, //是否显示分页（*）
-            pageNumber : ended, //初始化加载最后一页
-            pageSize : 10, //每页的记录行数（*）
-            pageList : [ 10, 15, 20, 30, 100 ]//可供选择的每页的行数（*）
-        })
+    $('#datatable').DataTable({
+        "order": [[0, "desc"]]
     })
 </script>
 
