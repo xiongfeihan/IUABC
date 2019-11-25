@@ -2,7 +2,9 @@ package com.org.iuabc.service.impl;
 
 import com.alibaba.fastjson.JSONObject;
 import com.org.iuabc.dao.RunningDataDao;
+import com.org.iuabc.entity.IpcInfo;
 import com.org.iuabc.entity.RunningData;
+import com.org.iuabc.service.IpcInfoService;
 import com.org.iuabc.service.RunningDataService;
 import com.org.iuabc.socket.ClientSocket;
 import com.org.iuabc.socket.IuabcServerSocket;
@@ -17,6 +19,9 @@ import org.springframework.stereotype.Service;
 public class RunningDataServiceImpl implements RunningDataService {
 
     private RunningDataDao runningDataDao;
+
+    @Autowired
+    private IpcInfoService ipcInfoService;
 
     @Autowired
     public void setRunningDataDao(RunningDataDao runningDataDao) {
@@ -49,7 +54,12 @@ public class RunningDataServiceImpl implements RunningDataService {
             return 2;
         }
         if (IuabcServerSocket.clientsMap.size() > 0) {
-            ClientSocket clientSocket = IuabcServerSocket.clientsMap.get("192.168.1.129");
+
+            // 通过起重机Id找到对应的工控机ip地址
+            IpcInfo ipc = ipcInfoService.findByCraneId(1L);
+            String ip = ipc.getIpcIp();
+
+            ClientSocket clientSocket = IuabcServerSocket.clientsMap.get(ip);
             clientSocket.send(builder.toString());
             return 1;
         }

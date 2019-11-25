@@ -16,4 +16,6 @@ public interface IpcInfoService {
 
     IpcInfo update(IpcInfo ipcInfo);
 
+    IpcInfo findByCraneId(Long craneId);
+
 }

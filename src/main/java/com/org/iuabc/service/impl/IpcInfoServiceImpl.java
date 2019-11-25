@@ -35,4 +35,9 @@ public class IpcInfoServiceImpl implements IpcInfoService {
     public IpcInfo update(IpcInfo ipcInfo) {
         return ipcInfoDao.save(ipcInfo);
     }
+
+    @Override
+    public IpcInfo findByCraneId(Long craneId) {
+        return ipcInfoDao.findByCraneId(craneId);
+    }
 }

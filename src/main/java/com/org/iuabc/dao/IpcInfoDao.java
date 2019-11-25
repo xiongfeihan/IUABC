@@ -15,4 +15,7 @@ public interface IpcInfoDao extends JpaRepository<IpcInfo, Long> {
     @Query(value = "select * from ipc_info where ipc_ip = ?1 and deleted = 0", nativeQuery = true)
     IpcInfo findByIpcIp(String ip);
 
+    @Query(value = "select * from ipc_info where crane_id = ?1 and deleted = 0", nativeQuery = true)
+    IpcInfo findByCraneId(Long craneId);
+
 }
