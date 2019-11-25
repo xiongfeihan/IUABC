@@ -21,6 +21,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
 
@@ -71,8 +72,9 @@ public class ClientSocket implements Runnable{
             client.setKey(socket.getInetAddress().toString().substring(1));
             IuabcServerSocket.clientsMap.put(client.getKey(), client);
 
-//            byte[] bytes = new byte[1024];
-//            client.getInputStream().read(bytes);
+            // 保存连接工控机的相关信息
+            saveIPCInfo(client.getKey());
+
             System.out.println("a client connected!");
             System.out.println(IuabcServerSocket.clientsMap);
             return client;
@@ -120,6 +122,7 @@ public class ClientSocket implements Runnable{
     public void logout() {
         if (IuabcServerSocket.clientsMap.containsKey(key)) {
             IuabcServerSocket.clientsMap.remove(key);
+            deleteIPCInfo(key);
         }
 
         System.out.println(IuabcServerSocket.clientsMap);
@@ -214,7 +217,7 @@ public class ClientSocket implements Runnable{
                     clientSocket.runningDataService.create(runningData);
                     System.out.println(info);
                 } else {
-                    System.out.println("信息为空");
+                    System.out.println("数据格式错误或信息为空");
                 }
             }
         } catch (IOException e) {
@@ -233,51 +236,55 @@ public class ClientSocket implements Runnable{
             return null;
         }
         RunningData runningData = null;
-        JSONObject jsonObject = JSONObject.parseObject(str);
-        int status = jsonObject.getInteger("status");
-        if (status == 1) {
-            runningData = new RunningData();
-            JSONObject data = jsonObject.getJSONObject("data");
+        try {
+            JSONObject jsonObject = JSONObject.parseObject(str);
+            int status = jsonObject.getInteger("status");
+            if (status == 1) {
+                runningData = new RunningData();
+                JSONObject data = jsonObject.getJSONObject("data");
 
-            if (data != null) {
-                runningData.setCraneId(data.getLong("craneId"));
+                if (data != null) {
+                    runningData.setCraneId(data.getLong("craneId"));
 
-                // 大车相关信息
-                JSONObject cart = data.getJSONObject("cart");
-                if (cart != null) {
-                    runningData.setCartSpeed(cart.getFloat("speed"));
-                    runningData.setCartPosition(cart.getFloat("position"));
-                    runningData.setCartLevel(cart.getInteger("level"));
-                    runningData.setCartDirection(cart.getInteger("direction"));
-                }
+                    // 大车相关信息
+                    JSONObject cart = data.getJSONObject("cart");
+                    if (cart != null) {
+                        runningData.setCartSpeed(cart.getFloat("speed"));
+                        runningData.setCartPosition(cart.getFloat("position"));
+                        runningData.setCartLevel(cart.getInteger("level"));
+                        runningData.setCartDirection(cart.getInteger("direction"));
+                    }
 
-                // 小车相关信息
-                JSONObject crab = data.getJSONObject("crab");
-                if (crab != null) {
-                    runningData.setCrabSpeed(crab.getFloat("speed"));
-                    runningData.setCrabPosition(crab.getFloat("position"));
-                    runningData.setCrabLevel(crab.getInteger("level"));
-                    runningData.setCrabDirection(crab.getInteger("direction"));
-                }
+                    // 小车相关信息
+                    JSONObject crab = data.getJSONObject("crab");
+                    if (crab != null) {
+                        runningData.setCrabSpeed(crab.getFloat("speed"));
+                        runningData.setCrabPosition(crab.getFloat("position"));
+                        runningData.setCrabLevel(crab.getInteger("level"));
+                        runningData.setCrabDirection(crab.getInteger("direction"));
+                    }
 
-                // 起升机构相关信息
-                JSONObject hoist = data.getJSONObject("hoist");
-                if (hoist != null) {
-                    runningData.setHoistSpeed(hoist.getFloat("speed"));
-                    runningData.setHoistPosition(hoist.getFloat("position"));
-                    runningData.setHoistLevel(hoist.getInteger("level"));
-                    runningData.setHoistDirection(hoist.getInteger("direction"));
-                }
+                    // 起升机构相关信息
+                    JSONObject hoist = data.getJSONObject("hoist");
+                    if (hoist != null) {
+                        runningData.setHoistSpeed(hoist.getFloat("speed"));
+                        runningData.setHoistPosition(hoist.getFloat("position"));
+                        runningData.setHoistLevel(hoist.getInteger("level"));
+                        runningData.setHoistDirection(hoist.getInteger("direction"));
+                    }
 
-                runningData.setWorkload(data.getFloat("workload"));
+                    runningData.setWorkload(data.getFloat("workload"));
 
-                SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
-                try {
-                    runningData.setCreateTime(format.parse(data.getString("createTime")));
-                } catch (ParseException e) {
-                    e.printStackTrace();
+                    SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+                    try {
+                        runningData.setCreateTime(format.parse(data.getString("createTime")));
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
+        } catch (Exception e) {
+            System.out.println("数据格式错误！");
         }
 
         return runningData;
@@ -294,7 +301,31 @@ public class ClientSocket implements Runnable{
             IpcInfo ipcInfo = new IpcInfo();
             ipcInfo.setIpcIp(ip);
             ipcInfo.setConnectTime(new Date());
+            ipcInfo.setCraneId(1L);
+            clientSocket.ipcInfoService.create(ipcInfo);
+        } else {
+            ipc.setConnectTime(new Date());
+            clientSocket.ipcInfoService.update(ipc);
+        }
+    }
 
+    /**
+     * 断开时更改数据表中记录状态
+     * @param ip 工控机ip地址
+     */
+    private static void deleteIPCInfo(String ip) {
+        IpcInfo ipc = clientSocket.ipcInfoService.findByIp(ip);
+        if (ipc != null) {
+            // 客户端断开后5s才logout，所以此处工控机的断开时间需要减5s
+            Date date = new Date();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(date);
+            calendar.add(Calendar.SECOND, -5);
+            ipc.setDisconnectTime(calendar.getTime());
+
+            // 改变工控机记录是否被删除的状态
+            ipc.setDeleted(1);
+            clientSocket.ipcInfoService.update(ipc);
         }
     }
 }

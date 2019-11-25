@@ -14,4 +14,6 @@ public interface IpcInfoService {
 
     IpcInfo findByIp(String ip);
 
+    IpcInfo update(IpcInfo ipcInfo);
+
 }

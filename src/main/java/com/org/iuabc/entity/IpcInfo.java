@@ -30,4 +30,6 @@ public class IpcInfo {
 
     private Long craneId;
 
+    private Integer deleted;
+
 }
