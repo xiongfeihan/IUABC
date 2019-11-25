@@ -14,4 +14,8 @@ public interface IpcInfoService {
 
     IpcInfo findByIp(String ip);
 
+    IpcInfo update(IpcInfo ipcInfo);
+
+    IpcInfo findByCraneId(Long craneId);
+
 }
