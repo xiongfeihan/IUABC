@@ -449,10 +449,12 @@
             min: 0,
             max: width
         },
-        series: [{
+        series: [
+            {
             data: position,
             type: 'line'
-        }]
+            }
+        ]
     };
     if (option && typeof option === "object") {
         myChart.setOption(option, true);
