@@ -17,20 +17,14 @@
     <link href="/vendors/nprogress/nprogress.css" rel="stylesheet">
     <!-- iCheck -->
     <link href="/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-
-    <!-- bootstrap-progressbar -->
-    <link href="/vendors/bootstrap-progressbar/css/bootstrap-progressbar-3.3.4.min.css" rel="stylesheet">
-    <!-- JQVMap -->
-    <link href="/vendors/jqvmap/dist/jqvmap.min.css" rel="stylesheet"/>
-    <!-- bootstrap-daterangepicker -->
-    <link href="/vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
-    <!-- bootstrap-datetimepicker -->
-    <link href="/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.css" rel="stylesheet">
-
+    <!-- Datatables -->
+    <link href="/vendors/datatables.net-bs/css/dataTables.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-buttons-bs/css/buttons.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-fixedheader-bs/css/fixedHeader.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-responsive-bs/css/responsive.bootstrap.min.css" rel="stylesheet">
+    <link href="/vendors/datatables.net-scroller-bs/css/scroller.bootstrap.min.css" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="/css/custom.min.css" rel="stylesheet">
-
-    <script type="text/javascript" src="/js/jquery-3.2.1.js"></script>
 </head>
 <body class="nav-md">
 <div class="container body">
@@ -125,26 +119,26 @@
 
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
-                            <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown"
+                            <a href="javascript:" class="user-profile dropdown-toggle" data-toggle="dropdown"
                                aria-expanded="false">
                                 <img src="/images/img.jpg" alt="">${Session.user.userName}
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">
-                                <li><a href="javascript:;"> Profile</a></li>
+                                <li><a href="javascript:"> Profile</a></li>
                                 <li>
-                                    <a href="javascript:;">
+                                    <a href="javascript:">
                                         <span class="badge bg-red pull-right">50%</span>
                                         <span>Settings</span>
                                     </a>
                                 </li>
-                                <li><a href="javascript:;">Help</a></li>
+                                <li><a href="javascript:">Help</a></li>
                                 <li><a href="/logout"><i class="fa fa-sign-out pull-right"></i> Log Out</a></li>
                             </ul>
                         </li>
 
                         <li role="presentation" class="dropdown">
-                            <a href="javascript:;" class="dropdown-toggle info-number" data-toggle="dropdown"
+                            <a href="javascript:" class="dropdown-toggle info-number" data-toggle="dropdown"
                                aria-expanded="false">
                                 <i class="fa fa-envelope-o"></i>
                                 <span class="badge bg-green">6</span>
@@ -279,7 +273,6 @@
     </footer>
     <!-- /footer content -->
 </div>
-
 <!-- jQuery -->
 <script src="/vendors/jquery/dist/jquery.min.js"></script>
 <!-- Bootstrap -->
@@ -288,44 +281,13 @@
 <script src="/vendors/fastclick/lib/fastclick.js"></script>
 <!-- NProgress -->
 <script src="/vendors/nprogress/nprogress.js"></script>
-<!-- Chart.js -->
-<script src="/vendors/Chart.js/dist/Chart.min.js"></script>
-<!-- gauge.js -->
-<#--<script src="/vendors/gauge.js/dist/gauge.min.js"></script>-->
-<!-- bootstrap-progressbar -->
-<script src="/vendors/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
 <!-- iCheck -->
 <script src="/vendors/iCheck/icheck.min.js"></script>
-<!-- Skycons -->
-<script src="/vendors/skycons/skycons.js"></script>
-<!-- Flot -->
-<script src="/vendors/Flot/jquery.flot.js"></script>
-<script src="/vendors/Flot/jquery.flot.pie.js"></script>
-<script src="/vendors/Flot/jquery.flot.time.js"></script>
-<script src="/vendors/Flot/jquery.flot.stack.js"></script>
-<script src="/vendors/Flot/jquery.flot.resize.js"></script>
-<!-- Flot plugins -->
-<script src="/vendors/flot.orderbars/js/jquery.flot.orderBars.js"></script>
-<script src="/vendors/flot-spline/js/jquery.flot.spline.min.js"></script>
-<script src="/vendors/flot.curvedlines/curvedLines.js"></script>
-<!-- DateJS -->
-<script src="/vendors/DateJS/build/date.js"></script>
-<!-- JQVMap -->
-<script src="/vendors/jqvmap/dist/jquery.vmap.js"></script>
-<script src="/vendors/jqvmap/dist/maps/jquery.vmap.world.js"></script>
-<script src="/vendors/jqvmap/examples/js/jquery.vmap.sampledata.js"></script>
-<!-- bootstrap-daterangepicker -->
-<script src="/vendors/moment/min/moment.min.js"></script>
-<script src="/vendors/bootstrap-daterangepicker/daterangepicker.js"></script>
-
-<!-- jQuery Knob -->
-<script src="/vendors/jquery-knob/dist/jquery.knob.min.js"></script>
-
 <!-- Datatables -->
 <script src="/vendors/datatables.net/js/jquery.dataTables.min.js"></script>
-<#--<script src="/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>-->
+<script src="/vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <script src="/vendors/datatables.net-buttons/js/dataTables.buttons.min.js"></script>
-<#--<script src="/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>-->
+<script src="/vendors/datatables.net-buttons-bs/js/buttons.bootstrap.min.js"></script>
 <script src="/vendors/datatables.net-buttons/js/buttons.flash.min.js"></script>
 <script src="/vendors/datatables.net-buttons/js/buttons.html5.min.js"></script>
 <script src="/vendors/datatables.net-buttons/js/buttons.print.min.js"></script>
@@ -337,13 +299,12 @@
 <script src="/vendors/jszip/dist/jszip.min.js"></script>
 <script src="/vendors/pdfmake/build/pdfmake.min.js"></script>
 <script src="/vendors/pdfmake/build/vfs_fonts.js"></script>
-
 <!-- Custom Theme Scripts -->
 <script src="/js/custom.min.js"></script>
 
 <script>
     $('#datatable').DataTable({
-        "order": [[0, "desc"]]
+        'order': [0, "desc"]
     })
 </script>
 
