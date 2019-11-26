@@ -6,8 +6,6 @@ import com.org.iuabc.entity.RunningData;
 import com.org.iuabc.service.IpcInfoService;
 import com.org.iuabc.service.RunningDataService;
 import com.org.iuabc.service.WorkshopService;
-import com.org.iuabc.service.impl.WorkshopServiceImpl;
-import com.org.iuabc.utils.SpringUtil;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -189,7 +187,6 @@ public class ClientSocket implements Runnable{
                 ", key='" + key + '\'' +
                 '}';
     }
-
 
     /**
      * 接受处理消息

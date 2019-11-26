@@ -56,11 +56,11 @@ public class WebLogAspect {
         HttpSession session = request.getSession();
         User user = ((User) session.getAttribute("user"));
 
-        // 记录下请求内容
-        String guestName = null;
-        if (user != null) {
-            guestName = user.getUserName();
-        }
+        // 未登录无权限者，不记录
+        if(user == null)
+            return;
+
+        String guestName = user.getUserName();
         String IP = request.getRemoteAddr();
         String url = request.getRequestURL().toString();
         String method = request.getMethod();
@@ -68,7 +68,7 @@ public class WebLogAspect {
         Date beginTime = new Date(System.currentTimeMillis());
 
         //避免登陆的密码被明文存储
-        if("http://localhost:8080/login".equals(url)){
+        if(url.contains("/login")){
             String[] split = args.split(",");
             split[1] = Md5Util.StringInMd5(split[1]);//将密码Md5加密
             args = Arrays.toString(split);
@@ -94,6 +94,9 @@ public class WebLogAspect {
 
         //更新登录前的人是谁(/login方法在登陆后才知晓who)
         User user = ((User) attributes.getRequest().getSession().getAttribute("user"));
+
+        if (user == null)
+            return;
 
         //更新方法返回时间--即结束时间
         Date endTime = new Date(System.currentTimeMillis());
