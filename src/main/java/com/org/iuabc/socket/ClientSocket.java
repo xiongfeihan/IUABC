@@ -1,9 +1,12 @@
 package com.org.iuabc.socket;
 
+import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
 import com.org.iuabc.entity.IpcInfo;
+import com.org.iuabc.entity.PathCoordinate;
 import com.org.iuabc.entity.RunningData;
 import com.org.iuabc.service.IpcInfoService;
+import com.org.iuabc.service.PathCoordinateService;
 import com.org.iuabc.service.RunningDataService;
 import com.org.iuabc.service.WorkshopService;
 import lombok.Data;
@@ -19,6 +22,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -41,6 +45,9 @@ public class ClientSocket implements Runnable{
 
     @Autowired
     private IpcInfoService ipcInfoService;
+
+    @Autowired
+    private PathCoordinateService pathCoordinateService;
 
     public static ClientSocket clientSocket;
 
@@ -198,24 +205,15 @@ public class ClientSocket implements Runnable{
                 inputStream.read(bytes);
                 String info = new String(bytes, "utf-8").trim();
 
-                // 处理json格式的字符串，去掉中间空格回车等。
-//                String data = JSON.toJSONString(info);
-
-//                JSONObject jsonObject = JSONObject.parseObject(info);
-//                Workshop workshop = new Workshop();
-//                workshop.setHeight(jsonObject.getFloat("height"));
-//                workshop.setWidth(jsonObject.getFloat("width"));
-//                workshop.setLength(jsonObject.getFloat("length"));
-//                clientSocket.workshopService.create(workshop);
-//                workshopService.create(workshop);
-
-                RunningData runningData = String2RunningData(info);
-                if (runningData != null) {
-                    clientSocket.runningDataService.create(runningData);
-                    System.out.println(info);
-                } else {
-                    System.out.println("数据格式错误或信息为空");
+                // 根据收到数据的不同进行不同的处理
+                JSONObject jsonObject = JSONObject.parseObject(info);
+                int status = jsonObject.getInteger("status");
+                if (status == 1) {
+                    saveRunningData(info);
+                } else if (status == 2) {
+                    savePathCoordinate(info);
                 }
+
             }
         } catch (IOException e) {
             System.out.println("客户端已断开");
@@ -228,16 +226,15 @@ public class ClientSocket implements Runnable{
      * @param str
      * @return
      */
-    public static RunningData String2RunningData (String str) {
+    public static void saveRunningData (String str) {
         if (str == null || str.length() == 0) {
-            return null;
+            return;
         }
-        RunningData runningData = null;
         try {
             JSONObject jsonObject = JSONObject.parseObject(str);
             int status = jsonObject.getInteger("status");
             if (status == 1) {
-                runningData = new RunningData();
+                RunningData runningData = new RunningData();
                 JSONObject data = jsonObject.getJSONObject("data");
 
                 if (data != null) {
@@ -278,13 +275,62 @@ public class ClientSocket implements Runnable{
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
+                    clientSocket.runningDataService.create(runningData);
                 }
             }
         } catch (Exception e) {
             System.out.println("数据格式错误！");
         }
+    }
 
-        return runningData;
+    public static void savePathCoordinate(String str) {
+        if (str == null || str.length() == 0) {
+            return;
+        }
+        try {
+            JSONObject jsonObject = JSONObject.parseObject(str);
+            int status = jsonObject.getInteger("status");
+            if (status == 2) {
+                JSONObject data = jsonObject.getJSONObject("data");
+                if (data != null) {
+
+                    JSONObject back = data.getJSONObject("back");
+                    if (back != null) {
+                        JSONArray backPoints = back.getJSONArray("point");
+                        for (int i = 0; i < backPoints.size(); i++) {
+                            PathCoordinate pathCoordinate = new PathCoordinate();
+                            JSONObject point = backPoints.getJSONObject(i);
+                            pathCoordinate.setCraneId(data.getLong("craneId"));
+                            pathCoordinate.setPathId(data.getLong("pathId"));
+                            pathCoordinate.setPointX(point.getFloat("x"));
+                            pathCoordinate.setPointY(point.getFloat("y"));
+                            pathCoordinate.setPointZ(point.getFloat("z"));
+                            pathCoordinate.setCreateTime(new Date());
+                            pathCoordinate.setPathFlag(1);
+                            clientSocket.pathCoordinateService.create(pathCoordinate);
+                        }
+                    }
+                    JSONObject run = data.getJSONObject("run");
+                    if (run != null) {
+                        JSONArray runPoints = back.getJSONArray("point");
+                        for (int i = 0; i < runPoints.size(); i++) {
+                            PathCoordinate pathCoordinate = new PathCoordinate();
+                            JSONObject point = runPoints.getJSONObject(i);
+                            pathCoordinate.setCraneId(data.getLong("craneId"));
+                            pathCoordinate.setPathId(data.getLong("pathId"));
+                            pathCoordinate.setPointX(point.getFloat("x"));
+                            pathCoordinate.setPointY(point.getFloat("y"));
+                            pathCoordinate.setPointZ(point.getFloat("z"));
+                            pathCoordinate.setCreateTime(new Date());
+                            pathCoordinate.setPathFlag(2);
+                            clientSocket.pathCoordinateService.create(pathCoordinate);
+                        }
+                    }
+                }
+            }
+        } catch (Exception e) {
+            System.out.println("数据格式错误！");
+        }
     }
 
 

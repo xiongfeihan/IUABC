@@ -3,6 +3,7 @@ package com.org.iuabc.controller;
 import com.org.iuabc.entity.User;
 import com.org.iuabc.entity.Workshop;
 import com.org.iuabc.service.AccessService;
+import com.org.iuabc.service.PathPlanService;
 import com.org.iuabc.service.RunningDataService;
 import com.org.iuabc.service.WorkshopService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,9 @@ public class PathPlanningController {
     private RunningDataService runningDataService;
 
     @Autowired
+    private PathPlanService pathPlanService;
+
+    @Autowired
     private AccessService accessService;
 
     @Autowired
@@ -58,6 +62,6 @@ public class PathPlanningController {
     @RequestMapping("/send")
     @ResponseBody
     public Object send(@RequestParam("positionJson") String positionJson) {
-        return runningDataService.send(positionJson);
+        return pathPlanService.send(positionJson);
     }
 }

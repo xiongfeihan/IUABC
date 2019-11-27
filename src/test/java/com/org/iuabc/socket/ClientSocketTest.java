@@ -30,6 +30,6 @@ public class ClientSocketTest {
                 "\"direction\":-1},\"workload\":2.125,\n" +
                 "\"createTime\":\"2019-08-04 13:37:50\"}\n" +
                 "}";
-        System.out.println(ClientSocket.String2RunningData(str));
+//        System.out.println(ClientSocket.String2RunningData(str));
     }
 }
