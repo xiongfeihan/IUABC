@@ -22,11 +22,11 @@ public class PathCoordinate {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long pointId;
 
-    private Float pointX;
+    private Double pointX;
 
-    private Float pointY;
+    private Double pointY;
 
-    private Float pointZ;
+    private Double pointZ;
 
     private Long pathId;
 

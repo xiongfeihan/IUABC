@@ -13,4 +13,6 @@ public interface PathPlanService {
 
     Integer send(String position);
 
+    PathPlan findLatestPlan(Long craneId);
+
 }

@@ -279,11 +279,7 @@
                                     <div class="col-md-12 col-sm-12 col-xs-12 text-center">
                                         <button type="button" class="btn btn-primary" id="send_coordinate">发送坐标</button>
                                         <button class="btn btn-primary" type="reset" id="reset">重置</button>
-                                        <button type="button" class="btn btn-success" id="generate_path"
-                                                <#if access != 1>
-                                                    disabled="true" title="无权限"
-                                                </#if>
-                                                >生成路径</button>
+                                        <button type="button" class="btn btn-success" id="generate_path">生成路径</button>
                                     </div>
                                 </div>
 
@@ -424,7 +420,9 @@
     var myChart = echarts.init(dom);
 
     // 下述3项应该从接口取
-    var position = [];
+    var backPath = [];
+    var runPath = [];
+    var realPath = [];
     var length = '${workshop.length}';
     var width = '${workshop.width}';
     var height = '${workshop.height}';
@@ -434,11 +432,15 @@
     option = {
         title: {
             text: "车间立体图",
-            left: 'center',
+            left: 'left',
             textStyle: {
                 fontSize:25,
                 padding:10
             }
+        },
+        legend: {
+            data:['当前位置返回起点路径','起点到终点规划路径','实时路径'],     // 需要和下面series里面name值保持一致才行
+            left: 'right'
         },
         xAxis3D: {
             name: '车间长度/m',
@@ -477,8 +479,34 @@
         },
         series: [
             {
-            data: position,
-            type: 'line3D'
+                name: '当前位置返回起点路径',
+                data: backPath,
+                type: 'line3D',
+                smooth: false,
+                itemStyle:{
+                    normal:{
+                        lineStyle:{
+                            color:'#26b99a',
+                            type:'dotted'  //'dotted'虚线 'solid'实线
+                        }
+                    }
+                },
+            },
+            {
+                name: '起点到终点规划路径',
+                data: runPath,
+                type: 'line3D',
+                lineStyle:{
+                    color:'#2e9fff'
+                }
+            },
+            {
+                name: '实时路径',
+                data: realPath,
+                type: 'line3D',
+                lineStyle:{
+                    color:'#ff0000'
+                }
             }
         ]
     };
@@ -547,30 +575,70 @@
                     || $("#end_Z").val().length === 0) {
                 alert("输入坐标不完整！");
             } else {
-                var x1 = parseFloat($("#start_X").val());
-                var y1 = parseFloat($("#start_Y").val());
-                var z1 = parseFloat($("#start_Z").val());
-                var x2 = parseFloat($("#end_X").val());
-                var y2 = parseFloat($("#end_Y").val());
-                var z2 = parseFloat($("#end_Z").val());
 
-                // 此处应该由路径规划策略得出坐标,将车间信息以及输入其实坐标位置传给后台方法
-                position.push([x1, y1, z1]);
-                position.push([x2, y2, z2]);
-                option.series = [{
-                    data: position,
-                    type: 'line3D'
-                }];
-                if (option && typeof option === "object") {
-                    myChart.setOption(option, true);
-                };
+                $.ajax({
+                    type : "post",
+                    url : "/path/planning/generate",
+                    dataType : "json",
+                    data : {
+                        // TODO 硬编码
+                        "craneId" : 1
+                    },
+                    success : function (data) {
+                        console.log(data);
+                        // data.length == 0
+                        if (data == null) {
+                            alert("路径还未规划完毕！请稍后重试");
+                        } else {
+                            for (var i = 0; i < data.length; i++) {
+                                if (data[i].pathFlag == 1) {
+                                    var backPoint = [];
+                                    backPoint.push(data[i].pointX.toFixed(4));
+                                    backPoint.push(data[i].pointY.toFixed(4));
+                                    backPoint.push(data[i].pointZ.toFixed(4));
+                                    backPath.push(backPoint);
+                                } else if (data[i].pathFlag == 2) {
+                                    var runPoint = [];
+                                    runPoint.push(data[i].pointX.toFixed(4));
+                                    runPoint.push(data[i].pointY.toFixed(4));
+                                    runPoint.push(data[i].pointZ.toFixed(4));
+                                    runPath.push(runPoint);
+                                }
+                            }
+                            console.log(backPath);
+                            console.log(runPath);
+                            option.series[0].data = backPath;
+                            option.series[1].data = runPath;
+                            if (option && typeof option === "object") {
+                                myChart.setOption(option);
+                            };
+                            generateRealPath(true);
+                            // $("#send_coordinate").attr("disabled", false);
+                            // $("#generate_path").attr("disabled", true);
+                        }
+                    },
+                    error : function () {
+                        alert("生成路径失败！");
+                    }
+                })
             }
         });
         $("#reset").on("click", function () {
-            position = [];
-            option.series = [];
             myChart.clear();
-            myChart.setOption(option, true);
+
+            // 清除之前存有的点坐标，否则下次生成会叠加
+            backPath = [];
+            runPath = [];
+            realPath = [];
+
+            // 清空画布
+            for (var i = 0; i < option.series.length; i++) {
+                option.series[i].data = [];
+            }
+            myChart.setOption(option);
+            generateRealPath(false);
+            // $("#send_coordinate").attr("disabled", false);
+            // $("#generate_path").attr("disabled", true);
         });
     })
 
@@ -581,6 +649,46 @@
             $(this).val("");
             this.focus();
         }
+    }
+
+    function generateRealPath(flag) {
+        if (flag == true) {
+            var interval = setInterval(function () {
+                getLatestData();
+                if (flag == false) {
+                    clearInterval(interval);
+                }
+            },1000)
+        }
+    }
+
+    function getLatestData() {
+        $.ajax({
+            type : "get",
+            url : "/realTime/monitor/getLatestData",
+            dataType : "json",
+            data : {
+
+            },
+            success : function (d) {
+                if (d.status == "running") {
+                    var x = d.data.cartPosition.toFixed(2);
+                    var y = d.data.crabPosition.toFixed(2);
+                    var z = d.data.hoistPosition.toFixed(2);
+                    realPath.push([x,y,z]);
+                    option.series[2].data = realPath;
+                    if (option && typeof option === "object") {
+                        // myChart.setOption(option, true); 为true时不合并之前的数据
+                        myChart.setOption(option);
+                    };
+                } else {
+
+                }
+            },
+            error : function () {
+                alert("失败");
+            }
+        })
     }
 
 </script>

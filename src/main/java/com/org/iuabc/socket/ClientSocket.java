@@ -201,17 +201,28 @@ public class ClientSocket implements Runnable{
     public void recieveMessage() {
         try {
             while (!isSocketClosed()) {
-                byte[] bytes = new byte[1024];
+                byte[] bytes = new byte[64000];
                 inputStream.read(bytes);
                 String info = new String(bytes, "utf-8").trim();
+                System.out.println(info);
 
                 // 根据收到数据的不同进行不同的处理
-                JSONObject jsonObject = JSONObject.parseObject(info);
-                int status = jsonObject.getInteger("status");
-                if (status == 1) {
-                    saveRunningData(info);
-                } else if (status == 2) {
-                    savePathCoordinate(info);
+                if (!"".equals(info) && info != null) {
+                    try{
+                        JSONObject jsonObject = JSONObject.parseObject(info);
+                        int status = jsonObject.getInteger("status");
+                        if (status == 1) {
+                            saveRunningData(info);
+                        } else if (status == 2) {
+                            savePathCoordinate(info);
+                        }
+                    } catch (Exception e) {
+                        System.out.println("---------------------------------------------------------");
+                        System.out.println(info);
+                        System.out.println("数据格式错误！");
+                        e.printStackTrace();
+                        System.out.println("---------------------------------------------------------");
+                    }
                 }
 
             }
@@ -297,34 +308,61 @@ public class ClientSocket implements Runnable{
                     JSONObject back = data.getJSONObject("back");
                     if (back != null) {
                         JSONArray backPoints = back.getJSONArray("point");
+                        StringBuilder builder = new StringBuilder();
                         for (int i = 0; i < backPoints.size(); i++) {
-                            PathCoordinate pathCoordinate = new PathCoordinate();
+//                            PathCoordinate pathCoordinate = new PathCoordinate();
+//                            JSONObject point = backPoints.getJSONObject(i);
+//                            pathCoordinate.setCraneId(data.getLong("craneId"));
+//                            pathCoordinate.setPathId(data.getLong("pathId"));
+//                            pathCoordinate.setPointX(point.getDouble("x"));
+//                            pathCoordinate.setPointY(point.getDouble("y"));
+//                            pathCoordinate.setPointZ(point.getDouble("z"));
+//                            pathCoordinate.setCreateTime(new Date());
+//                            pathCoordinate.setPathFlag(1);
+//                            clientSocket.pathCoordinateService.create(pathCoordinate);
+
+                            // 拼接insert语句，使用Mybatis一次性插入数据库
                             JSONObject point = backPoints.getJSONObject(i);
-                            pathCoordinate.setCraneId(data.getLong("craneId"));
-                            pathCoordinate.setPathId(data.getLong("pathId"));
-                            pathCoordinate.setPointX(point.getFloat("x"));
-                            pathCoordinate.setPointY(point.getFloat("y"));
-                            pathCoordinate.setPointZ(point.getFloat("z"));
-                            pathCoordinate.setCreateTime(new Date());
-                            pathCoordinate.setPathFlag(1);
-                            clientSocket.pathCoordinateService.create(pathCoordinate);
+                            builder.append(" (");
+                            builder.append(data.getLong("craneId") + ",");
+                            builder.append(data.getLong("pathId") + ",");
+                            builder.append(point.getDouble("x") + ",");
+                            builder.append(point.getDouble("y") + ",");
+                            builder.append(point.getDouble("z") + ",");
+                            builder.append(1 + ")");
+                            builder.append(",");
                         }
+                        String list = builder.substring(0, builder.length() - 1);
+                        clientSocket.pathCoordinateService.savePointList(list);
                     }
                     JSONObject run = data.getJSONObject("run");
                     if (run != null) {
-                        JSONArray runPoints = back.getJSONArray("point");
+                        JSONArray runPoints = run.getJSONArray("point");
+                        StringBuilder builder = new StringBuilder();
                         for (int i = 0; i < runPoints.size(); i++) {
-                            PathCoordinate pathCoordinate = new PathCoordinate();
+//                            PathCoordinate pathCoordinate = new PathCoordinate();
+//                            JSONObject point = runPoints.getJSONObject(i);
+//                            pathCoordinate.setCraneId(data.getLong("craneId"));
+//                            pathCoordinate.setPathId(data.getLong("pathId"));
+//                            pathCoordinate.setPointX(point.getDouble("x"));
+//                            pathCoordinate.setPointY(point.getDouble("y"));
+//                            pathCoordinate.setPointZ(point.getDouble("z"));
+//                            pathCoordinate.setCreateTime(new Date());
+//                            pathCoordinate.setPathFlag(2);
+//                            clientSocket.pathCoordinateService.create(pathCoordinate);
+
                             JSONObject point = runPoints.getJSONObject(i);
-                            pathCoordinate.setCraneId(data.getLong("craneId"));
-                            pathCoordinate.setPathId(data.getLong("pathId"));
-                            pathCoordinate.setPointX(point.getFloat("x"));
-                            pathCoordinate.setPointY(point.getFloat("y"));
-                            pathCoordinate.setPointZ(point.getFloat("z"));
-                            pathCoordinate.setCreateTime(new Date());
-                            pathCoordinate.setPathFlag(2);
-                            clientSocket.pathCoordinateService.create(pathCoordinate);
+                            builder.append(" (");
+                            builder.append(data.getLong("craneId") + ",");
+                            builder.append(data.getLong("pathId") + ",");
+                            builder.append(point.getDouble("x") + ",");
+                            builder.append(point.getDouble("y") + ",");
+                            builder.append(point.getDouble("z") + ",");
+                            builder.append(2 + ")");
+                            builder.append(",");
                         }
+                        String list = builder.substring(0, builder.length() - 1);
+                        clientSocket.pathCoordinateService.savePointList(list);
                     }
                 }
             }

@@ -21,8 +21,6 @@ import java.util.Date;
 @Service
 public class PathPlanServiceImpl implements PathPlanService {
 
-    public static Long pathId;
-
     @Autowired
     private IpcInfoService ipcInfoService;
 
@@ -58,16 +56,13 @@ public class PathPlanServiceImpl implements PathPlanService {
             pathPlan.setEndY(end.getFloat("y"));
             pathPlan.setEndZ(end.getFloat("z"));
 
-            pathId = KeyUtil.getUniqueKeyByDate();
-            pathPlan.setPathId(pathId);
-
             pathPlan.setCreateTime(new Date());
 
             // TODO 起重机ID硬编码
             Long craneId = 1L;
             pathPlan.setCraneId(craneId);
 
-            create(pathPlan);
+            Long pathId = create(pathPlan).getPathId();
 
             // 然后发送给工控机
             StringBuilder builder = new StringBuilder();
@@ -86,5 +81,10 @@ public class PathPlanServiceImpl implements PathPlanService {
         }
 
         return 0;
+    }
+
+    @Override
+    public PathPlan findLatestPlan(Long craneId) {
+        return pathPlanDao.findLatestPlan(craneId);
     }
 }

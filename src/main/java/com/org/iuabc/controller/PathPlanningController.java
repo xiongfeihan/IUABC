@@ -2,10 +2,7 @@ package com.org.iuabc.controller;
 
 import com.org.iuabc.entity.User;
 import com.org.iuabc.entity.Workshop;
-import com.org.iuabc.service.AccessService;
-import com.org.iuabc.service.PathPlanService;
-import com.org.iuabc.service.RunningDataService;
-import com.org.iuabc.service.WorkshopService;
+import com.org.iuabc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,6 +33,9 @@ public class PathPlanningController {
     private PathPlanService pathPlanService;
 
     @Autowired
+    private PathCoordinateService pathCoordinateService;
+
+    @Autowired
     private AccessService accessService;
 
     @Autowired
@@ -63,5 +63,11 @@ public class PathPlanningController {
     @ResponseBody
     public Object send(@RequestParam("positionJson") String positionJson) {
         return pathPlanService.send(positionJson);
+    }
+
+    @RequestMapping("/generate")
+    @ResponseBody
+    public Object generate(@RequestParam("craneId") Long craneId) {
+        return pathCoordinateService.getPath(craneId);
     }
 }
