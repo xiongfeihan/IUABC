@@ -36,8 +36,8 @@ $("#send_coordinate").on("click", function () {
             success : function (data) {
                 if (data === 1) {
                     alert("发送成功！");
-                    // $("#send_coordinate").attr("disabled", true);
-                    // $("#generate_path").attr("disabled", false);
+                    $("#send_coordinate").attr("disabled", true);
+                    $("#generate_path").attr("disabled", false);
                 } else if (data === 2) {
                     alert("无工控机在线！");
                 } else {

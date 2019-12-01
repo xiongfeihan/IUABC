@@ -696,8 +696,9 @@
         return option;
     }
 
-    setInterval(function () {
+    var interval = setInterval(getLatestData,1000);
 
+    function getLatestData() {
         $.ajax({
             type : "get",
             url : "/realTime/monitor/getLatestData",
@@ -725,11 +726,11 @@
                 }
             },
             error : function () {
+                clearInterval(interval);
                 alert("失败");
             }
         })
-
-    },1000);
+    }
 
     function refresh() {
         cartSpeedChart.setOption(cartSpeedOption, true);

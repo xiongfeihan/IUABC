@@ -427,6 +427,16 @@
     var width = '${workshop.width}';
     var height = '${workshop.height}';
 
+    // 应该从接口获取最高起升高度
+    var maxPickHeight = 5;
+
+    // 定义获取实时数据的标识
+    var flag = false;
+    var interval = null;
+
+    // 页面初始时生成路径按钮不可用
+    $("#generate_path").attr("disabled", true);
+
     var app = {};
     option = null;
     option = {
@@ -450,7 +460,9 @@
                 padding:10
             },
             min: 0,
-            max: length
+            max: length,
+            // splitNumber: 8,
+            // interval: Math.ceil(length / 10),
         },
         yAxis3D: {
             name: '车间宽度/m',
@@ -460,7 +472,12 @@
                 padding:10
             },
             min: 0,
-            max: width
+            max: width,
+            axisTick: {
+                // length: 10
+            }
+            // splitNumber: 5,
+            // interval: Math.ceil(width / 10),
         },
         zAxis3D: {
             name: '车间高度/m',
@@ -521,7 +538,7 @@
         $("#start_X").change(function () {
             var start_x = parseFloat($(this).val());
             if (start_x > length || start_x < 0) {
-                alert("坐标超出车间长度范围！请重新输入");
+                alert("坐标超出大车运行范围！请重新输入");
                 $(this).val("");
                 this.focus();
             }
@@ -529,15 +546,15 @@
         $("#start_Y").change(function () {
             var start_y = parseFloat($(this).val());
             if (start_y > width || start_y < 0) {
-                alert("坐标超出车间宽度范围！请重新输入");
+                alert("坐标超出小车运行范围！请重新输入");
                 $(this).val("");
                 this.focus();
             }
         });
         $("#start_Z").change(function () {
             var start_z = parseFloat($(this).val());
-            if (start_z > height || start_z < 0) {
-                alert("坐标超出车间高度范围！请重新输入");
+            if (start_z > maxPickHeight || start_z < 0) {
+                alert("坐标超出起升高度范围！请重新输入");
                 $(this).val("");
                 this.focus();
             }
@@ -545,7 +562,7 @@
         $("#end_X").change(function () {
             var end_x = parseFloat($(this).val());
             if (end_x > length || end_x < 0) {
-                alert("坐标超出车间长度范围！请重新输入");
+                alert("坐标超出大车运行范围！请重新输入");
                 $(this).val("");
                 this.focus();
             }
@@ -553,15 +570,15 @@
         $("#end_Y").change(function () {
             var end_y = parseFloat($(this).val());
             if (end_y > width || end_y < 0) {
-                alert("坐标超出车间宽度范围！请重新输入");
+                alert("坐标超出小车运行范围！请重新输入");
                 $(this).val("");
                 this.focus();
             }
         });
         $("#end_Z").change(function () {
             var end_z = parseFloat($(this).val());
-            if (end_z > height || end_z < 0) {
-                alert("坐标超出车间高度范围！请重新输入");
+            if (end_z > maxPickHeight || end_z < 0) {
+                alert("坐标超出起升高度范围！请重新输入");
                 $(this).val("");
                 this.focus();
             }
@@ -585,9 +602,8 @@
                         "craneId" : 1
                     },
                     success : function (data) {
-                        console.log(data);
-                        // data.length == 0
-                        if (data == null) {
+                        // console.log(data);
+                        if (data.length == 0) {
                             alert("路径还未规划完毕！请稍后重试");
                         } else {
                             for (var i = 0; i < data.length; i++) {
@@ -612,9 +628,10 @@
                             if (option && typeof option === "object") {
                                 myChart.setOption(option);
                             };
-                            generateRealPath(true);
-                            // $("#send_coordinate").attr("disabled", false);
-                            // $("#generate_path").attr("disabled", true);
+                            flag = true;
+                            generateRealPath(flag);
+                            $("#send_coordinate").attr("disabled", false);
+                            $("#generate_path").attr("disabled", true);
                         }
                     },
                     error : function () {
@@ -636,9 +653,10 @@
                 option.series[i].data = [];
             }
             myChart.setOption(option);
-            generateRealPath(false);
-            // $("#send_coordinate").attr("disabled", false);
-            // $("#generate_path").attr("disabled", true);
+            flag = false;
+            generateRealPath(flag);
+            $("#send_coordinate").attr("disabled", false);
+            $("#generate_path").attr("disabled", true);
         });
     })
 
@@ -653,7 +671,7 @@
 
     function generateRealPath(flag) {
         if (flag == true) {
-            var interval = setInterval(function () {
+            interval = setInterval(function () {
                 getLatestData();
                 if (flag == false) {
                     clearInterval(interval);
@@ -686,6 +704,7 @@
                 }
             },
             error : function () {
+                clearInterval(interval);
                 alert("失败");
             }
         })
