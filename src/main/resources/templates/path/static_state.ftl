@@ -223,7 +223,7 @@
                 <div class="col-md-12 col-sm-12 col-xs-12">
                     <div class="x_panel">
                         <div class="x_title">
-                            <h2>坐标输入<small>车间长度为 ${workshop.length} 米，车间宽度为 ${workshop.width} 米</small></h2>
+                            <h2>坐标输入<small>车间长度为 ${workshop.length} 米，车间宽度为 ${workshop.width} 米，车间高度为 ${workshop.height} 米</small></h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
                                 </li>
@@ -245,35 +245,41 @@
                             <#--<br />-->
                             <form class="form-horizontal form-label-left input_mask">
 
-                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                                     <input type="number" class="form-control has-feedback-left" id="start_X" placeholder="起始位置横坐标">
                                     <span class="fa fa-table form-control-feedback left" aria-hidden="true"></span>
                                 </div>
 
-                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                                     <input type="number" class="form-control has-feedback-left" id="start_Y" placeholder="起始位置纵坐标">
                                     <span class="fa fa-table form-control-feedback left" aria-hidden="true"></span>
                                 </div>
 
-                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                    <input type="number" class="form-control has-feedback-left" id="start_Z" placeholder="起始位置竖坐标">
+                                    <span class="fa fa-table form-control-feedback left" aria-hidden="true"></span>
+                                </div>
+
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                                     <input type="number" class="form-control has-feedback-left" id="end_X" placeholder="目标点横坐标">
                                     <span class="fa fa-table form-control-feedback left" aria-hidden="true"></span>
                                 </div>
 
-                                <div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
                                     <input type="number" class="form-control has-feedback-left" id="end_Y" placeholder="目标点纵坐标">
                                     <span class="fa fa-table form-control-feedback left" aria-hidden="true"></span>
                                 </div>
 
+                                <div class="col-md-4 col-sm-4 col-xs-12 form-group has-feedback">
+                                    <input type="number" class="form-control has-feedback-left" id="end_Z" placeholder="目标点竖坐标">
+                                    <span class="fa fa-table form-control-feedback left" aria-hidden="true"></span>
+                                </div>
+
                                 <div class="form-group">
-                                    <div class="col-md-9 col-sm-9 col-xs-12 col-md-offset-5">
-                                        <button type="button" class="btn btn-primary" id="generate_path">生成路径</button>
+                                    <div class="col-md-12 col-sm-12 col-xs-12 text-center">
+                                        <button type="button" class="btn btn-primary" id="send_coordinate">发送坐标</button>
                                         <button class="btn btn-primary" type="reset" id="reset">重置</button>
-                                        <button type="button" class="btn btn-success" id="run"
-                                                <#if access != 1>
-                                                    disabled="true" title="无权限"
-                                                </#if>
-                                                >运行</button>
+                                        <button type="button" class="btn btn-success" id="generate_path">生成路径</button>
                                     </div>
                                 </div>
 
@@ -414,22 +420,29 @@
     var myChart = echarts.init(dom);
 
     // 下述3项应该从接口取
-    var position = [];
+    var backPath = [];
+    var runPath = [];
+    var realPath = [];
     var length = '${workshop.length}';
     var width = '${workshop.width}';
+    var height = '${workshop.height}';
 
     var app = {};
     option = null;
     option = {
         title: {
-            text: "车间平面图",
-            left: 'center',
+            text: "车间立体图",
+            left: 'left',
             textStyle: {
                 fontSize:25,
                 padding:10
             }
         },
-        xAxis: {
+        legend: {
+            data:['当前位置返回起点路径','起点到终点规划路径','实时路径'],     // 需要和下面series里面name值保持一致才行
+            left: 'right'
+        },
+        xAxis3D: {
             name: '车间长度/m',
             nameLocation:'middle',
             nameTextStyle:{
@@ -439,7 +452,7 @@
             min: 0,
             max: length
         },
-        yAxis: {
+        yAxis3D: {
             name: '车间宽度/m',
             nameLocation:'middle',
             nameTextStyle:{
@@ -449,10 +462,53 @@
             min: 0,
             max: width
         },
-        series: [{
-            data: position,
-            type: 'line'
-        }]
+        zAxis3D: {
+            name: '车间高度/m',
+            nameLocation:'middle',
+            nameTextStyle:{
+                fontSize:16,
+                padding:10
+            },
+            min: 0,
+            max: height
+        },
+        grid3D: {
+            viewControl: {
+                projection: 'orthographic'
+            }
+        },
+        series: [
+            {
+                name: '当前位置返回起点路径',
+                data: backPath,
+                type: 'line3D',
+                smooth: false,
+                itemStyle:{
+                    normal:{
+                        lineStyle:{
+                            color:'#26b99a',
+                            type:'dotted'  //'dotted'虚线 'solid'实线
+                        }
+                    }
+                },
+            },
+            {
+                name: '起点到终点规划路径',
+                data: runPath,
+                type: 'line3D',
+                lineStyle:{
+                    color:'#2e9fff'
+                }
+            },
+            {
+                name: '实时路径',
+                data: realPath,
+                type: 'line3D',
+                lineStyle:{
+                    color:'#ff0000'
+                }
+            }
+        ]
     };
     if (option && typeof option === "object") {
         myChart.setOption(option, true);
@@ -478,6 +534,14 @@
                 this.focus();
             }
         });
+        $("#start_Z").change(function () {
+            var start_z = parseFloat($(this).val());
+            if (start_z > height || start_z < 0) {
+                alert("坐标超出车间高度范围！请重新输入");
+                $(this).val("");
+                this.focus();
+            }
+        });
         $("#end_X").change(function () {
             var end_x = parseFloat($(this).val());
             if (end_x > length || end_x < 0) {
@@ -494,35 +558,87 @@
                 this.focus();
             }
         });
+        $("#end_Z").change(function () {
+            var end_z = parseFloat($(this).val());
+            if (end_z > height || end_z < 0) {
+                alert("坐标超出车间高度范围！请重新输入");
+                $(this).val("");
+                this.focus();
+            }
+        });
         $("#generate_path").on("click", function () {
             if ($("#start_X").val().length === 0
                     || $("#start_Y").val().length === 0
+                    || $("#start_Z").val().length === 0
                     || $("#end_X").val().length === 0
-                    || $("#end_Y").val().length === 0) {
+                    || $("#end_Y").val().length === 0
+                    || $("#end_Z").val().length === 0) {
                 alert("输入坐标不完整！");
             } else {
-                var x1 = parseFloat($("#start_X").val());
-                var y1 = parseFloat($("#start_Y").val());
-                var x2 = parseFloat($("#end_X").val());
-                var y2 = parseFloat($("#end_Y").val());
 
-                // 此处应该由路径规划策略得出坐标,将车间信息以及输入其实坐标位置传给后台方法
-                position.push([x1, y1]);
-                position.push([x2, y2]);
-                option.series = [{
-                    data: position,
-                    type: 'line'
-                }];
-                if (option && typeof option === "object") {
-                    myChart.setOption(option, true);
-                };
+                $.ajax({
+                    type : "post",
+                    url : "/path/planning/generate",
+                    dataType : "json",
+                    data : {
+                        // TODO 硬编码
+                        "craneId" : 1
+                    },
+                    success : function (data) {
+                        console.log(data);
+                        // data.length == 0
+                        if (data == null) {
+                            alert("路径还未规划完毕！请稍后重试");
+                        } else {
+                            for (var i = 0; i < data.length; i++) {
+                                if (data[i].pathFlag == 1) {
+                                    var backPoint = [];
+                                    backPoint.push(data[i].pointX.toFixed(4));
+                                    backPoint.push(data[i].pointY.toFixed(4));
+                                    backPoint.push(data[i].pointZ.toFixed(4));
+                                    backPath.push(backPoint);
+                                } else if (data[i].pathFlag == 2) {
+                                    var runPoint = [];
+                                    runPoint.push(data[i].pointX.toFixed(4));
+                                    runPoint.push(data[i].pointY.toFixed(4));
+                                    runPoint.push(data[i].pointZ.toFixed(4));
+                                    runPath.push(runPoint);
+                                }
+                            }
+                            console.log(backPath);
+                            console.log(runPath);
+                            option.series[0].data = backPath;
+                            option.series[1].data = runPath;
+                            if (option && typeof option === "object") {
+                                myChart.setOption(option);
+                            };
+                            generateRealPath(true);
+                            // $("#send_coordinate").attr("disabled", false);
+                            // $("#generate_path").attr("disabled", true);
+                        }
+                    },
+                    error : function () {
+                        alert("生成路径失败！");
+                    }
+                })
             }
         });
         $("#reset").on("click", function () {
-            position = [];
-            option.series = [];
             myChart.clear();
-            myChart.setOption(option, true);
+
+            // 清除之前存有的点坐标，否则下次生成会叠加
+            backPath = [];
+            runPath = [];
+            realPath = [];
+
+            // 清空画布
+            for (var i = 0; i < option.series.length; i++) {
+                option.series[i].data = [];
+            }
+            myChart.setOption(option);
+            generateRealPath(false);
+            // $("#send_coordinate").attr("disabled", false);
+            // $("#generate_path").attr("disabled", true);
         });
     })
 
@@ -533,6 +649,46 @@
             $(this).val("");
             this.focus();
         }
+    }
+
+    function generateRealPath(flag) {
+        if (flag == true) {
+            var interval = setInterval(function () {
+                getLatestData();
+                if (flag == false) {
+                    clearInterval(interval);
+                }
+            },1000)
+        }
+    }
+
+    function getLatestData() {
+        $.ajax({
+            type : "get",
+            url : "/realTime/monitor/getLatestData",
+            dataType : "json",
+            data : {
+
+            },
+            success : function (d) {
+                if (d.status == "running") {
+                    var x = d.data.cartPosition.toFixed(2);
+                    var y = d.data.crabPosition.toFixed(2);
+                    var z = d.data.hoistPosition.toFixed(2);
+                    realPath.push([x,y,z]);
+                    option.series[2].data = realPath;
+                    if (option && typeof option === "object") {
+                        // myChart.setOption(option, true); 为true时不合并之前的数据
+                        myChart.setOption(option);
+                    };
+                } else {
+
+                }
+            },
+            error : function () {
+                alert("失败");
+            }
+        })
     }
 
 </script>

@@ -20,4 +20,8 @@ public class KeyUtil {
         return System.currentTimeMillis() + String.valueOf(number);
     }
 
+    public static synchronized Long getUniqueKeyByDate() {
+        return System.currentTimeMillis();
+    }
+
 }
