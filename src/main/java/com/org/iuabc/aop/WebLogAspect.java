@@ -38,7 +38,7 @@ public class WebLogAspect {
     }
 
     //当前日志记录标识
-    private Long  LOG_ID;
+    private Long LOG_ID;
 
     //初始URL：“localhost:8080/”不记录，不作为切面
     @Pointcut("execution(public * com.org.iuabc.controller.*.*(..))" +
@@ -56,27 +56,24 @@ public class WebLogAspect {
         HttpSession session = request.getSession();
         User user = ((User) session.getAttribute("user"));
 
-        // 未登录无权限者，不记录
-        if(user == null)
-            return;
-
-        String guestName = user.getUserName();
+        String guestName = user != null ? user.getUserName() : "temp";
         String IP = request.getRemoteAddr();
         String url = request.getRequestURL().toString();
         String method = request.getMethod();
         String args = Arrays.toString(joinPoint.getArgs());
+        args = args.substring(1, args.length() - 1);
         Date beginTime = new Date(System.currentTimeMillis());
 
         //避免登陆的密码被明文存储
-        if(url.contains("/login")){
-            String[] split = args.split(",");
-            split[1] = Md5Util.StringInMd5(split[1]);//将密码Md5加密
-            args = Arrays.toString(split);
-            args = args.substring(1,args.length()-1);
-        }
+        String[] split = args.split(",");
+        if (url.contains("/login"))
+            split[1] = Md5Util.StringInMd5(String.valueOf(split[1]));//将密码Md5加密
+        if (split.length > 0 && split[split.length - 1].contains("org.apache"))
+            split = Arrays.copyOf(split, split.length - 1);//去掉最后一项 org.apache.catalina...
+        args = Arrays.toString(split);
 
         //将0:0:0:0:0:0:0:1的IP地址转为127.0.0.1
-        if("0:0:0:0:0:0:0:1".equals(IP)){
+        if ("0:0:0:0:0:0:0:1".equals(IP)) {
             IP = "127.0.0.1";
         }
 
@@ -95,16 +92,11 @@ public class WebLogAspect {
         //更新登录前的人是谁(/login方法在登陆后才知晓who)
         User user = ((User) attributes.getRequest().getSession().getAttribute("user"));
 
-        if (user == null)
-            return;
-
         //更新方法返回时间--即结束时间
         Date endTime = new Date(System.currentTimeMillis());
         GuestLog byId = guestLogService.findById(LOG_ID);
         byId.setEndTime(endTime);
-        if (user != null) {
-            byId.setGuestName(user.getUserName());
-        }
+        byId.setGuestName(user.getUserName());
         guestLogService.saveGuestLog(byId);
     }
 }
